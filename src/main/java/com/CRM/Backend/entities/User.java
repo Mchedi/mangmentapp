@@ -17,7 +17,7 @@ public class User {
     private  RoleName role;
 
 @OneToOne
-    private société sc;
+    private societe sc;
 
 
 

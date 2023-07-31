@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 
-public class société {
+public class societe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
