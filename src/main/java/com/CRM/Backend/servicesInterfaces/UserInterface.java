@@ -1,14 +1,16 @@
 package com.CRM.Backend.servicesInterfaces;
 
-import com.CRM.Backend.entities.User;
+import com.CRM.Backend.entities.MyUser;
+import org.apache.catalina.User;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 public interface UserInterface {
 
-    public List<User> RetrieveAllUsers();
+    public List<MyUser> RetrieveAllUsers();
     public void DeleteUser(Long id);
-    public User RetrieveUserById(Long id);
-    public User AddUser(User user);
-    public User UpdateUser(User user,Long id);
+    public MyUser RetrieveUserById(Long id);
+    public MyUser AddUser(MyUser myUser);
+    public MyUser UpdateUser(MyUser myUser, Long id);
 }

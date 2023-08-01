@@ -11,9 +11,10 @@ public class societe {
     private Long id;
     private String Name;
     private long chiffre_affaire;
-    private  int maricule_fiscale;
+    private  int maricule_fiscale
+            ;
     private String adress;
 @OneToOne(mappedBy = "sc")
-User u;
+MyUser u;
 
 }
