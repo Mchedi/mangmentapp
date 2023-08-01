@@ -27,17 +27,20 @@ public class UserServices implements UserInterface {
 
     @Override
     public void DeleteUser(Long id) {
+        ur.deleteById(id);
 
     }
 
     @Override
     public MyUser RetrieveUserById(Long id) {
-        return null;
+        return ur.findById(id).get();
     }
+
 
     @Override
     public MyUser AddUser(MyUser myUser) {
-        return null;
+                 return ur.save(myUser);
+
     }
 
     @Override
