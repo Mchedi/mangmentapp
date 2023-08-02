@@ -26,4 +26,10 @@ public class UserController {
       public MyUser addUser(@RequestBody MyUser myUser) {
             return userServices.AddUser(myUser);
       }
+
+      @PutMapping(value = "/affectsoc/{userid}/{socid}")
+      @ResponseBody
+      public void affecteretudtodepart(@PathVariable("userid") Long etudiantId ,@PathVariable("socid") Long departmentId ) {
+            userServices.assignsostouser(etudiantId,departmentId);
+      }
 }
