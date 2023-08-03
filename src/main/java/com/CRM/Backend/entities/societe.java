@@ -1,6 +1,7 @@
 package com.CRM.Backend.entities;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 
@@ -17,4 +18,6 @@ public class societe {
 @OneToOne(mappedBy = "sc")
 MyUser u;
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    private Set<Product> Products;
 }
