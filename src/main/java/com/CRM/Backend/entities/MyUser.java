@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
+
 public class MyUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,8 +20,8 @@ public class MyUser {
     @Enumerated(EnumType.STRING)
     private  RoleName role;
 
-@OneToOne
-    private societe sc;
+@OneToOne(mappedBy = "u",cascade = CascadeType.ALL)
+    private Societe sc;
 
 
 

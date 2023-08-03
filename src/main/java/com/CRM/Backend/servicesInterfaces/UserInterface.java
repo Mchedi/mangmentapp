@@ -1,8 +1,7 @@
 package com.CRM.Backend.servicesInterfaces;
 
 import com.CRM.Backend.entities.MyUser;
-import org.apache.catalina.User;
-import org.springframework.http.ResponseEntity;
+import com.CRM.Backend.entities.Societe;
 
 import java.util.List;
 
@@ -15,4 +14,7 @@ public interface UserInterface {
     public MyUser UpdateUser(MyUser myUser, Long id);
     public void assignsostouser(Long userid ,Long socid) ;
 
+    public Societe addAndAssignSocToUser(Societe sc, Long userid);
+
+    Societe addAndAssignUserToSociete(Societe societe, Long userId);
 }
