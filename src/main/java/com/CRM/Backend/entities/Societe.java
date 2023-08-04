@@ -19,4 +19,8 @@ public class Societe {
 @OneToOne
 MyUser u;
 
+    @OneToOne
+    abonnement a;
+
+
 }

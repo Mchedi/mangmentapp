@@ -17,7 +17,10 @@ public class abonnement {
 
     private Date End_Date;
     private  int price;
+    @ManyToOne
+    private sublim limit;
 
-
+    @OneToOne(mappedBy = "a")
+    private Societe sc;
 
 }
