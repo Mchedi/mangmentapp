@@ -3,10 +3,7 @@ package com.CRM.Backend.entities;
 import jdk.net.SocketFlow;
 import lombok.Data;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
 
@@ -14,6 +11,7 @@ import java.util.Set;
 @Entity
     public class Commande {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private Date date;
     private Etat etat;
