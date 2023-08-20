@@ -20,7 +20,7 @@ public class Societe {
 MyUser u;
 
     @OneToOne
-    abonnement a;
+    Sub a;
 
 
 }

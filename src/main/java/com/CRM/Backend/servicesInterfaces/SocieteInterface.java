@@ -7,12 +7,13 @@ import java.util.List;
 
 public interface SocieteInterface {
 
-    public List<Societe> RetrieveAllUsers();
-    public void DeleteUser(Long id);
-    public Societe RetrieveUserById(Long id);
-    public Societe AddUser(Societe myUser);
-    public Societe UpdateUser(Societe myUser, Long id);
-    public void assignsostouser(Long userid ,Long socid) ;
+    public List<Societe> RetrieveAllSociete();
+    public void DeletSociete(Long id);
+    public Societe RetrieveSocieteById(Long id);
+    public Societe AddSociete(Societe myUser);
+    public Societe UpdateSociete(Societe myUser, Long id);
+    Societe addAndAssignUserToSociete(Societe societe, Long userId);
+
 
 
 }

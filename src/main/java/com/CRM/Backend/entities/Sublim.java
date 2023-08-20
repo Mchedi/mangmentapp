@@ -5,7 +5,7 @@ import java.util.List;
 
 @Entity
 
-public class sublim {
+public class Sublim {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -14,7 +14,7 @@ public class sublim {
     private String type;
     private String sublim;
     @OneToMany(mappedBy = "limit")
-    private List<abonnement> subscriptions ;
+    private List<Sub> subscriptions ;
 
 
 
