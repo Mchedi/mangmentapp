@@ -78,5 +78,15 @@ public class SocieteController {
       public Societe getUserById(@PathVariable("id") Long id){
             return societeService.RetrieveSocieteById(id);
       }
+
+    @PostMapping("/{societeId}/purchase_sub/{subId}")
+    public ResponseEntity<String> assignSubToSociete(
+            @PathVariable Long societeId,
+            @PathVariable Long subId) {
+
+        String result = societeService.assignSocieteToSub(societeId, subId);
+        return ResponseEntity.ok(result);
+    }
 }
+
 

@@ -60,8 +60,6 @@ import java.util.Optional;
 
         return new ResponseEntity<>(new AutheposnseDTO(token), HttpStatus.OK);
     }
-
-
     @PostMapping("register")
     public ResponseEntity<String> register(@RequestBody RegisterDTO registerDto) {
         if (userRepository.existsByMail(registerDto.getMail())) {

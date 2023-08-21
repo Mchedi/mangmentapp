@@ -4,6 +4,8 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
+
 @Data
 @Entity
 
@@ -19,10 +21,10 @@ public class Sub {
 
     private Date End_Date;
     private  int price;
-    @ManyToOne
-    private Sublim limit;
+    @ManyToMany
+    private List<Sublim> sublims ;
 
-    @OneToOne(mappedBy = "a")
+    @OneToOne(mappedBy = "subs")
     private Societe sc;
 
 }

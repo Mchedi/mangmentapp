@@ -1,8 +1,10 @@
 package com.CRM.Backend.services;
 
 import com.CRM.Backend.entities.Sub;
+import com.CRM.Backend.entities.Sublim;
 import com.CRM.Backend.repositories.SubRepository;
 import com.CRM.Backend.repositories.UserRepository;
+import com.CRM.Backend.repositories.limitRepository;
 import com.CRM.Backend.repositories.societeRepository;
 import com.CRM.Backend.servicesInterfaces.SubInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +18,12 @@ public class SubServices implements SubInterface {
     @Autowired
     UserRepository ur;
     @Autowired
-    societeRepository sr;
+    societeRepository sor;
     @Autowired
     SubRepository sur;
+    @Autowired
+    limitRepository limitRepository;
+
 
     @Override
     public List<Sub> RetrieveAllSubs() {
@@ -26,11 +31,12 @@ public class SubServices implements SubInterface {
         return sur.findAll();
 
     }
+
     @Override
     public void DeleteSub(Long id) {
 
 
-            ur.deleteById(id);
+        ur.deleteById(id);
 
 
     }
@@ -42,16 +48,31 @@ public class SubServices implements SubInterface {
 
 
     @Override
-    public Sub AddSub(Sub sub) {
-        return sur.save(sub);
+    public String addSub(Sub sub) {
+        Sub addedSub = sur.save(sub);
 
-    }
+        if (addedSub != null) {
+            return "Sub added successfully";
+        } else {
+            return "You're not allowed to add a sub";
+        }}
 
     @Override
     public Sub UpdateSub(Sub sub, Long id) {
         return null;
-    }}
+    }
 
+    @Override
+    public void assignSublimToSub(Long subId, Long sublimId) {
+        Sub sub = sur.findById(subId).orElse(null);
+        Sublim sublim = limitRepository.findById(sublimId).orElse(null);
+
+            sub.getSublims().add(sublim); // Assign the Sublim to Sub
+            sur.save(sub);
+    }
+
+
+}
 
 
 

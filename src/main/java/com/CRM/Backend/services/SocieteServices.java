@@ -2,6 +2,8 @@ package com.CRM.Backend.services;
 
 import com.CRM.Backend.entities.MyUser;
 import com.CRM.Backend.entities.Societe;
+import com.CRM.Backend.entities.Sub;
+import com.CRM.Backend.repositories.SubRepository;
 import com.CRM.Backend.repositories.UserRepository;
 import com.CRM.Backend.repositories.societeRepository;
 import com.CRM.Backend.servicesInterfaces.SocieteInterface;
@@ -18,6 +20,8 @@ public class SocieteServices implements SocieteInterface {
     UserRepository ur;
     @Autowired
     societeRepository sr;
+    @Autowired
+    SubRepository sur;
     @Override
     public List<Societe> RetrieveAllSociete() {
         return sr.findAll();
@@ -49,4 +53,17 @@ public class SocieteServices implements SocieteInterface {
         societe.setU(user);
         return sr.save(societe);
     }
-}
+
+
+    public String assignSocieteToSub(Long societeId, Long subId) {
+        Societe societe = sr.findById(societeId).orElse(null);
+        Sub sub = sur.findById(subId).orElse(null);
+
+        if (societe != null && sub != null) {
+            societe.setSubs(sub);
+            sr.save(societe);
+            return "Societe assigned to Sub successfully";
+        } else {
+            return "Failed to assign Societe to Sub";
+        }
+    }}

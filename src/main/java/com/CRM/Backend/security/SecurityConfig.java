@@ -40,6 +40,10 @@ public class SecurityConfig {
                     .antMatchers("/api/auth/**").permitAll()
                     .antMatchers("/Societe/getall").hasAuthority("admin")
                     .antMatchers("/Societe/addAndAssignUser").hasAuthority("directure")
+                    .antMatchers("/sub/addsub").hasAuthority("admin")
+                    .antMatchers("/sublimit/addsublimit").hasAuthority("admin")
+                    .antMatchers("/{subId}/assign-sublim/{sublimId}").hasAuthority("admin")
+                    .antMatchers("/{{societeId}}/assign-sub/{{subId}}").hasAuthority("directure")
                     .anyRequest().authenticated()
                     .and()
                     .httpBasic();

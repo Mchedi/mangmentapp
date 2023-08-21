@@ -9,12 +9,11 @@ import java.util.List;
 
 public interface SublimInterface {
 
-    public List<Sublim> RetrieveAllUsers();
-    public ResponseEntity<String> DeleteUser(Long id);
-    public Sublim RetrieveUserById(Long id);
-    public Sublim AddUser(Sublim sublim);
-    public Sublim UpdateUser(Sublim sublim, Long id);
-    public void assignsostouser(Long userid ,Long socid) ;
+    public List<Sublim> RetrieveALLSublim();
+    public ResponseEntity<String> DeleteSublim(Long id);
+    public Sublim RetrieveSublimById(Long id);
+    public Sublim AddSublim(Sublim sublim);
+    public Sublim UpdatSublim(Sublim sublim, Long id);
 
 
 
