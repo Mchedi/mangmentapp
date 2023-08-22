@@ -1,8 +1,6 @@
-package com.CRM.Backend.servicesInterfaces;
+package com.CRM.Backend.services;
 
 import com.CRM.Backend.entities.MyUser;
-import org.apache.catalina.User;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 

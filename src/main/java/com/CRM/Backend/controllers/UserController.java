@@ -1,10 +1,8 @@
 package com.CRM.Backend.controllers;
 
 import com.CRM.Backend.entities.MyUser;
-import com.CRM.Backend.services.UserServices;
+import com.CRM.Backend.services.servicesImpl.UserServices;
 import lombok.AllArgsConstructor;
-import org.apache.catalina.User;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
