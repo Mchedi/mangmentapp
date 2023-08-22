@@ -10,6 +10,7 @@ public interface UserInterface {
 
     public List<MyUser> RetrieveAllUsers();
     public ResponseEntity<String> DeleteUser(Long id);
+
     public MyUser RetrieveUserById(Long id);
     public MyUser AddUser(MyUser myUser);
     public MyUser UpdateUser(MyUser myUser, Long id);
