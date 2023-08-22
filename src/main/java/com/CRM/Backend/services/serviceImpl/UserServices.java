@@ -1,10 +1,13 @@
 package com.CRM.Backend.services.serviceImpl;
 
 import com.CRM.Backend.entities.MyUser;
-import com.CRM.Backend.entities.societe;
+import com.CRM.Backend.entities.Societe;
 import com.CRM.Backend.repositories.*;
 import com.CRM.Backend.services.UserInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,9 +30,13 @@ public class UserServices implements UserInterface {
 
 
     @Override
-    public void DeleteUser(Long id) {
-        ur.deleteById(id);
-
+    public ResponseEntity<String> DeleteUser(Long id) {
+        try {
+            ur.deleteById(id);
+            return ResponseEntity.ok("User deleted successfully.");
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Unable to delete user due to data integrity violation.");
+        }
     }
 
     @Override
@@ -40,7 +47,7 @@ public class UserServices implements UserInterface {
 
     @Override
     public MyUser AddUser(MyUser myUser) {
-                 return ur.save(myUser);
+        return ur.save(myUser);
 
     }
 
@@ -49,14 +56,23 @@ public class UserServices implements UserInterface {
         return null;
     }
 
+
+
+    @Override
+    public Societe addAndAssignSocToUser(Societe sc, Long userid) {
+        return null;
+    }
+
+    @Override
+    public MyUser login(String mail, String password) {
+        return null;
+    }
+
+
     @Override
     public void assignsostouser(Long userid, Long socid) {
         MyUser u1 = ur.findById(userid).get();
-        societe s1 = sr.findById(socid).get();
-       u1.setSc(s1);
+        Societe s1 = sr.findById(socid).get();
+        u1.setSc(s1);
         ur.save(u1);
-
-    }
-
-}
-
+    }}
