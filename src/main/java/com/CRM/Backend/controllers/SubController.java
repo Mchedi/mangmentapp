@@ -1,7 +1,7 @@
 package com.CRM.Backend.controllers;
 
 import com.CRM.Backend.entities.Sub;
-import com.CRM.Backend.services.SubServices;
+import com.CRM.Backend.services.serviceImpl.SubServices;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

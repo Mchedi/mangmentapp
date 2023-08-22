@@ -1,16 +1,13 @@
-package com.CRM.Backend.services;
+package com.CRM.Backend.services.serviceImpl;
 
-import com.CRM.Backend.entities.Sub;
 import com.CRM.Backend.entities.Sublim;
 import com.CRM.Backend.repositories.SubRepository;
 import com.CRM.Backend.repositories.*;
 
 import com.CRM.Backend.repositories.UserRepository;
 import com.CRM.Backend.repositories.societeRepository;
-import com.CRM.Backend.servicesInterfaces.SubInterface;
-import com.CRM.Backend.servicesInterfaces.SublimInterface;
+import com.CRM.Backend.services.SublimInterface;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,17 +26,17 @@ public class SublimitServices implements SublimInterface {
 
     @Override
     public List<Sublim> RetrieveALLSublim() {
-        return null;
+        return limitRepository.findAll();
     }
 
     @Override
-    public ResponseEntity<String> DeleteSublim(Long id) {
-        return null;
+    public void DeleteSublim(Long id) {
+        limitRepository.deleteById(id);
     }
 
     @Override
     public Sublim RetrieveSublimById(Long id) {
-        return null;
+return limitRepository.findById(id).get();
     }
 
     @Override

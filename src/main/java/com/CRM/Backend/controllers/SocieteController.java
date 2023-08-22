@@ -4,26 +4,18 @@ import com.CRM.Backend.entities.MyUser;
 import com.CRM.Backend.entities.Societe;
 import com.CRM.Backend.repositories.UserRepository;
 import com.CRM.Backend.security.CustomUserDetailsService;
-import com.CRM.Backend.services.SocieteServices;
-import com.CRM.Backend.services.UserServices;
+import com.CRM.Backend.services.serviceImpl.SocieteServices;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 
-import java.util.Collection;
 import java.util.List;
-
-import static org.springframework.security.authorization.AuthorityAuthorizationManager.hasRole;
 
 @RestController
 @AllArgsConstructor

@@ -1,4 +1,4 @@
-package com.CRM.Backend.services;
+package com.CRM.Backend.services.serviceImpl;
 
 import com.CRM.Backend.entities.MyUser;
 import com.CRM.Backend.entities.Societe;
@@ -6,8 +6,7 @@ import com.CRM.Backend.entities.Sub;
 import com.CRM.Backend.repositories.SubRepository;
 import com.CRM.Backend.repositories.UserRepository;
 import com.CRM.Backend.repositories.societeRepository;
-import com.CRM.Backend.servicesInterfaces.SocieteInterface;
-import com.CRM.Backend.servicesInterfaces.UserInterface;
+import com.CRM.Backend.services.SocieteInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

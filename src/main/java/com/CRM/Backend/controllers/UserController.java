@@ -1,8 +1,7 @@
 package com.CRM.Backend.controllers;
 
 import com.CRM.Backend.entities.MyUser;
-import com.CRM.Backend.entities.Societe;
-import com.CRM.Backend.services.UserServices;
+import com.CRM.Backend.services.serviceImpl.UserServices;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

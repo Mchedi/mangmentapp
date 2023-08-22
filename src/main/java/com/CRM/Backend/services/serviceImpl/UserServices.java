@@ -1,9 +1,9 @@
-package com.CRM.Backend.services;
+package com.CRM.Backend.services.serviceImpl;
 
 import com.CRM.Backend.entities.MyUser;
 import com.CRM.Backend.entities.Societe;
 import com.CRM.Backend.repositories.*;
-import com.CRM.Backend.servicesInterfaces.UserInterface;
+import com.CRM.Backend.services.UserInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;

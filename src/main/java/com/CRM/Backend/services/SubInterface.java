@@ -1,8 +1,6 @@
-package com.CRM.Backend.servicesInterfaces;
+package com.CRM.Backend.services;
 
-import com.CRM.Backend.entities.Societe;
 import com.CRM.Backend.entities.Sub;
-import com.CRM.Backend.entities.Sublim;
 
 import java.util.List;
 

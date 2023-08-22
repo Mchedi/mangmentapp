@@ -1,4 +1,4 @@
-package com.CRM.Backend.servicesInterfaces;
+package com.CRM.Backend.services;
 
 import com.CRM.Backend.entities.MyUser;
 import com.CRM.Backend.entities.Societe;
