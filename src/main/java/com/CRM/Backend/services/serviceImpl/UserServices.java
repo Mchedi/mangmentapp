@@ -1,17 +1,13 @@
-package com.CRM.Backend.services;
+package com.CRM.Backend.services.serviceImpl;
 
 import com.CRM.Backend.entities.MyUser;
 import com.CRM.Backend.entities.societe;
 import com.CRM.Backend.repositories.*;
-import com.CRM.Backend.servicesInterfaces.UserInterface;
-import org.apache.catalina.User;
+import com.CRM.Backend.services.UserInterface;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserServices implements UserInterface {

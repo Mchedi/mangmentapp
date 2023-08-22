@@ -1,9 +1,8 @@
 package com.CRM.Backend.controllers;
 
 import com.CRM.Backend.entities.Caise;
-import com.CRM.Backend.entities.Panier;
-import com.CRM.Backend.services.CaiseServices;
-import com.CRM.Backend.services.PanierServices;
+import com.CRM.Backend.entities.dto.CaiseDto;
+import com.CRM.Backend.services.serviceImpl.CaiseServices;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +26,7 @@ public class CaiseController {
 
       @PostMapping("/addCaise")
       @ResponseBody
-      public Caise addcaise(@RequestBody Caise caise) {
+      public Caise addcaise(@RequestBody CaiseDto caise) {
             return caiseServices.AddCaise(caise);
       }
 

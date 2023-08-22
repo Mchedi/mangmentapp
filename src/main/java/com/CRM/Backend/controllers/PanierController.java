@@ -1,9 +1,8 @@
 package com.CRM.Backend.controllers;
 
-import com.CRM.Backend.entities.Commande;
 import com.CRM.Backend.entities.Panier;
-import com.CRM.Backend.services.CommandeServices;
-import com.CRM.Backend.services.PanierServices;
+import com.CRM.Backend.entities.dto.PanierDto;
+import com.CRM.Backend.services.serviceImpl.PanierServices;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,17 +26,17 @@ public class PanierController {
 
       @PostMapping("/addPanier")
       @ResponseBody
-      public Panier addpanier(@RequestBody Panier panier) {
+      public Panier addpanier(@RequestBody PanierDto panier) {
             return panierServices.AddPanier(panier);
       }
 
       @PutMapping("/updatepanier")
       @ResponseBody
-      public Panier updatepanier(@RequestBody Panier panier,Integer id) {
+      public Panier updatePanier(@RequestBody Panier panier,Integer id) {
             return panierServices.UpdatePanier(panier, id);
       }
       @DeleteMapping("/{id}")
-      public void Deletepanier(@PathVariable Integer id){
+      public void DeletePanier(@PathVariable Integer id){
              panierServices.DeletePanier(id);
       }
 }

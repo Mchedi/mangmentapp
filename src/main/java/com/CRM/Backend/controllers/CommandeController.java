@@ -1,9 +1,8 @@
 package com.CRM.Backend.controllers;
 
 import com.CRM.Backend.entities.Commande;
-import com.CRM.Backend.entities.Product;
-import com.CRM.Backend.services.CommandeServices;
-import com.CRM.Backend.services.ProductServices;
+import com.CRM.Backend.entities.dto.CommandeDto;
+import com.CRM.Backend.services.serviceImpl.CommandeServices;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +26,7 @@ public class CommandeController {
 
       @PostMapping("/addCommande")
       @ResponseBody
-      public Commande addcommande(@RequestBody Commande commande) {
+      public Commande addcommande(@RequestBody CommandeDto commande) {
             return commandeServices.AddCommande(commande);
       }
 

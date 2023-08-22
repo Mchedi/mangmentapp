@@ -1,7 +1,8 @@
 package com.CRM.Backend.controllers;
 
 import com.CRM.Backend.entities.Product;
-import com.CRM.Backend.services.ProductServices;
+import com.CRM.Backend.entities.dto.ProductDto;
+import com.CRM.Backend.services.serviceImpl.ProductServices;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +27,7 @@ public class ProductController {
 
       @PostMapping("/addproduct")
       @ResponseBody
-      public Product addproduct(@RequestBody Product product) {
+      public Product addproduct(@RequestBody ProductDto product) {
             return productServices.AddProduct(product);
       }
 
