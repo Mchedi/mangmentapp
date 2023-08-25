@@ -1,6 +1,6 @@
 package com.CRM.Backend.entities;
 
-import jdk.net.SocketFlow;
+//import jdk.net.SocketFlow;
 import lombok.Data;
 
 import javax.persistence.*;
