@@ -29,7 +29,6 @@ public class UserServices implements UserInterface {
     }
 
 
-
     @Override
     public ResponseEntity<String> DeleteUser(Long id) {
         try {

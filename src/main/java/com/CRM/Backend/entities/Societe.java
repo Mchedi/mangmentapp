@@ -3,6 +3,7 @@ package com.CRM.Backend.entities;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @Entity
@@ -19,6 +20,8 @@ public class Societe {
 @OneToOne
 MyUser u;
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    private Set<Product> Products;
     @OneToOne
     Sub subs;
 
