@@ -69,10 +69,4 @@ public class UserServices implements UserInterface {
     }
 
 
-    @Override
-    public void assignsostouser(Long userid, Long socid) {
-        MyUser u1 = ur.findById(userid).get();
-        Societe s1 = sr.findById(socid).get();
-        u1.setSc(s1);
-        ur.save(u1);
-    }}
+}

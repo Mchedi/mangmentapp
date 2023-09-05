@@ -1,5 +1,6 @@
 package com.CRM.Backend.services;
 
+import com.CRM.Backend.entities.Societe;
 import com.CRM.Backend.entities.Sub;
 
 import java.util.List;
@@ -15,6 +16,8 @@ public interface SubInterface {
 
     public Sub UpdateSub(Sub sub, Long id);
     void assignSublimToSub(Long subId, Long sublimId);
+    public void checkAndLogExgetSubpiredSubscriptionsForAllSocietes() ;
+     void logExpiredSubscription(Long subscriptionId, String societeName);
 
 
 }

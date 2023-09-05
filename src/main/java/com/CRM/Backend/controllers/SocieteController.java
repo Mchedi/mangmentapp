@@ -8,6 +8,7 @@ import com.CRM.Backend.services.serviceImpl.SocieteServices;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +29,8 @@ public class SocieteController {
     private final CustomUserDetailsService customUserDetailsService;
 
 
+    @CrossOrigin(origins = "http://localhost:3000/")
+
     @GetMapping("/getall")
       public List<Societe>  getAllSociete(){
          UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -37,6 +40,7 @@ public class SocieteController {
 
 // ...
 
+    @CrossOrigin(origins = "http://localhost:3000/")
     @PostMapping("/addAndAssignUser")
     public ResponseEntity<Societe> addAndAssignUserToSociete(@RequestBody Societe societe) {
         String loggedInUserMail = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -79,6 +83,21 @@ public class SocieteController {
         String result = societeService.assignSocieteToSub(societeId, subId);
         return ResponseEntity.ok(result);
     }
+    @PostMapping("/inviteComptable/{comptableEmail}")
+    public ResponseEntity<String> inviteComptable(@PathVariable String comptableEmail) {
+
+        // Get the logged user's email
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String directorEmail = authentication.getName();
+
+        try {
+            societeService.inviteComptable(directorEmail, comptableEmail);
+            return ResponseEntity.ok("Comptable invited and associated with the director's societe.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error inviting comptable: " + e.getMessage());
+        }
+    }
 }
+
 
 

@@ -76,9 +76,19 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.ow2.petals.samples</groupId>
+            <artifactId>su-SOAP-ArticleService-provide</artifactId>
+            <version>1.1.2-1.0.0</version>
+        </dependency>
+		<dependency>
+			<groupId>org.ow2.petals.samples</groupId>
+			<artifactId>su-SOAP-ArticleService-provide</artifactId>
+			<version>1.1.2-1.0.0</version>
+		</dependency>
 
 
-    </dependencies>
+	</dependencies>
 
 	<build>
 		<plugins>

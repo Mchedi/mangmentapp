@@ -38,7 +38,7 @@ public class SecurityConfig {
                     .and()
                     .authorizeRequests()
                     .antMatchers("/api/auth/**").permitAll()
-                    .antMatchers("/Societe/getall").hasAuthority("admin")
+                          .antMatchers("/Societe/getall").hasAuthority("admin")
                     .antMatchers("/Societe/addAndAssignUser").hasAuthority("directure")
                     .antMatchers("/sub/addsub").hasAuthority("admin")
                     .antMatchers("/sublimit/addsublimit").hasAuthority("admin")
@@ -52,6 +52,8 @@ public class SecurityConfig {
                     .antMatchers("/Commande/getall").hasAuthority("vendeur")
                     .antMatchers("/Commande/getall").hasAuthority("comptable")
                     .antMatchers("/Commande/addCommande").permitAll()
+                    .antMatchers("/User/getall").hasAuthority("admin")
+
                     .anyRequest().authenticated()
                     .and()
                     .httpBasic();

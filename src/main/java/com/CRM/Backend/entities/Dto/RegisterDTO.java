@@ -10,7 +10,7 @@ import javax.persistence.Enumerated;
 public class RegisterDTO {
     private  String mail;
     private String password;
-    private String name;
+                private String name;
     private Role role;
 
 

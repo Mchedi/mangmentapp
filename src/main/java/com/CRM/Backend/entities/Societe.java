@@ -1,29 +1,39 @@
-package com.CRM.Backend.entities;
+    package com.CRM.Backend.entities;
 
-import lombok.Data;
+    import com.fasterxml.jackson.annotation.JsonIgnore;
+    import lombok.Data;
 
-import javax.persistence.*;
-import java.util.Set;
+    import javax.persistence.*;
+    import java.util.Set;
 
-@Data
-@Entity
+    @Data
+    @Entity
 
-public class Societe {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public class Societe {
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-    private Long id;
-    private String Name;
-    private long chiffre_affaire;
-    private  int maricule_fiscale  ;
-    private String adress;
-@OneToOne
-MyUser u;
+                private Long id;
+                private String Name;
+                private long chiffre_affaire;
+                private  int maricule_fiscale  ;
+                private String adress;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    private Set<Product> Products;
-    @OneToOne
-    Sub subs;
+        @OneToOne
+        @JsonIgnore
+
+        private MyUser creator;
+
+        // One-to-many relationship with workers (MyUser)
+        @JsonIgnore
+        @OneToMany(mappedBy = "societeWork", cascade = CascadeType.ALL)
+        private Set<MyUser> workers;
 
 
-}
+        @ManyToMany(cascade = CascadeType.ALL)
+        private Set<Product> Products;
+        @OneToOne
+        Sub subs;
+
+
+    }

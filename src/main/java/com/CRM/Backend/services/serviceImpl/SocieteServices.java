@@ -1,6 +1,7 @@
 package com.CRM.Backend.services.serviceImpl;
 
 import com.CRM.Backend.entities.MyUser;
+import com.CRM.Backend.entities.Role;
 import com.CRM.Backend.entities.Societe;
 import com.CRM.Backend.entities.Sub;
 import com.CRM.Backend.repositories.SubRepository;
@@ -21,6 +22,7 @@ public class SocieteServices implements SocieteInterface {
     societeRepository sr;
     @Autowired
     SubRepository sur;
+
     @Override
     public List<Societe> RetrieveAllSociete() {
         return sr.findAll();
@@ -38,7 +40,7 @@ public class SocieteServices implements SocieteInterface {
 
     @Override
     public Societe AddSociete(Societe soc) {
-        return  sr.save(soc);
+        return sr.save(soc);
     }
 
     @Override
@@ -49,8 +51,14 @@ public class SocieteServices implements SocieteInterface {
     @Override
     public Societe addAndAssignUserToSociete(Societe societe, Long userId) {
         MyUser user = ur.findById(userId).orElse(null);
-        societe.setU(user);
-        return sr.save(societe);
+        societe.setCreator(user);
+        sr.save(societe);
+
+        user.setSocieteWork(societe);
+        ur.save(user);
+
+
+        return societe;
     }
 
 
@@ -65,4 +73,14 @@ public class SocieteServices implements SocieteInterface {
         } else {
             return "Failed to assign Societe to Sub";
         }
-    }}
+    }
+    public void inviteComptable(String directorEmail, String comptableEmail) {
+        MyUser director = ur.findByMail(directorEmail).get();
+        Societe directorSociete = director.getSocieteWork();
+        MyUser comptable = ur.findByMailAndRole(comptableEmail, Role.comptable).get();
+        comptable.setSocieteWork(directorSociete);
+        ur.save(comptable);
+
+    }
+
+    }

@@ -1,14 +1,15 @@
-package com.CRM.Backend.entities.Dto;
+    package com.CRM.Backend.entities.Dto;
 
-import lombok.Data;
+    import lombok.Data;
 
-@Data
-public class AutheposnseDTO {
-    private String accessToken;
-    private String tokenType = "Bearer ";
+    @Data
+    public class AutheposnseDTO {
+        private String accessToken;
+        private String tokenType = "Bearer ";
+        private Long userId;
 
-    public AutheposnseDTO(String accessToken) {
-        this.accessToken = accessToken;
+        public AutheposnseDTO(String accessToken ,Long userId) {
+            this.accessToken = accessToken;this.userId = userId;
+        }
     }
-}
 

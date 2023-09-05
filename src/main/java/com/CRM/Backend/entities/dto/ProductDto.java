@@ -11,7 +11,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductDto {
+public class        ProductDto {
 
     private String name;
     private double price;
