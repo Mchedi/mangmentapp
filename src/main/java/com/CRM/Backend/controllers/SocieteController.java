@@ -33,8 +33,7 @@ public class SocieteController {
 
     @GetMapping("/getall")
       public List<Societe>  getAllSociete(){
-         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-         System.out.println("User roles: " + userDetails.getAuthorities());
+
             return societeService.RetrieveAllSociete();
       }
 

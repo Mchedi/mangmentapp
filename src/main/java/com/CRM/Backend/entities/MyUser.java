@@ -24,8 +24,8 @@ public class MyUser {
     private Role role    ;
 
     @ManyToOne
-    @JsonIgnore
-    private Societe societeWork;
+        //@JsonIgnore
+        private Societe societeWork;
     public MyUser(String password, String mail) {
         this.password = password;
         this.mail = mail;

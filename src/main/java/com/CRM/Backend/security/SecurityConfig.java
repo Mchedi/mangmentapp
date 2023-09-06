@@ -38,7 +38,7 @@ public class SecurityConfig {
                     .and()
                     .authorizeRequests()
                     .antMatchers("/api/auth/**").permitAll()
-                          .antMatchers("/Societe/getall").hasAuthority("admin")
+                       .antMatchers("/Societe/getall").hasAuthority("admin")
                     .antMatchers("/Societe/addAndAssignUser").hasAuthority("directure")
                     .antMatchers("/sub/addsub").hasAuthority("admin")
                     .antMatchers("/sublimit/addsublimit").hasAuthority("admin")
@@ -54,7 +54,7 @@ public class SecurityConfig {
                     .antMatchers("/Commande/addCommande").permitAll()
                     .antMatchers("/User/getall").hasAuthority("admin")
 
-                    .anyRequest().authenticated()
+                    //.anyRequest().authenticated()
                     .and()
                     .httpBasic();
             http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
