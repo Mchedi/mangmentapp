@@ -1,5 +1,6 @@
 package com.CRM.Backend.controllers;
 
+import com.CRM.Backend.entities.Dto.SocieteDTO;
 import com.CRM.Backend.entities.MyUser;
 import com.CRM.Backend.entities.Societe;
 import com.CRM.Backend.repositories.UserRepository;
@@ -20,6 +21,8 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000/")
+
 @RequestMapping("/Societe")
 
 public class SocieteController {
@@ -94,6 +97,23 @@ public class SocieteController {
             return ResponseEntity.ok("Comptable invited and associated with the director's societe.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error inviting comptable: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/details")
+    public ResponseEntity<SocieteDTO> getSocieteDetails(Authentication authentication) {
+        // Get the currently logged-in user from the authentication object
+        String loggedInUserMail = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        MyUser loggedInUser = userRepository.findByMail(loggedInUserMail)
+                .orElseThrow(() -> new UsernameNotFoundException("Logged-in user not found"));
+
+        SocieteDTO societeDTO = societeService.getSocieteDTOByCreator(loggedInUser.getId());
+
+        if (societeDTO != null) {
+            return new ResponseEntity<>(societeDTO, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // Handle the case where the creator has no associated societe
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.CRM.Backend.services.serviceImpl;
 
+import com.CRM.Backend.entities.Dto.SocieteDTO;
 import com.CRM.Backend.entities.MyUser;
 import com.CRM.Backend.entities.Role;
 import com.CRM.Backend.entities.Societe;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class SocieteServices implements SocieteInterface {
@@ -82,5 +84,22 @@ public class SocieteServices implements SocieteInterface {
         ur.save(comptable);
 
     }
+    public SocieteDTO getSocieteDTOByCreator(Long id) {
+        Societe societe = sr.findByCreatorId(id).get()  ;
+    List<MyUser> workers = ur.findAllBySocieteWorkId(societe.getId());
+        List<String> workerNames = workers.stream()
+                .map(MyUser::getName)
+                .collect(Collectors.toList());
 
-    }
+            return new SocieteDTO(
+                    societe.getName(),
+                    societe.getChiffre_affaire(),
+                    societe.getMaricule_fiscale(),
+                    societe.getAdress(),
+                    workerNames
+                    );
+
+        }
+
+
+}

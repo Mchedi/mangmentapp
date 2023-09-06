@@ -67,7 +67,7 @@ public class UserController {
                   return Collections.emptyList(); // Return an empty list if no Societe is associated with the user
             }
       }
-      @GetMapping("/getmyusersinfo")
+            @GetMapping("/getmyusersinfo")
       public List<UserDTO> getMyUsersInfoForLoggedInUser() {
             String loggedInUserMail = SecurityContextHolder.getContext().getAuthentication().getName();
             MyUser loggedInUser = userRepository.findByMail(loggedInUserMail)

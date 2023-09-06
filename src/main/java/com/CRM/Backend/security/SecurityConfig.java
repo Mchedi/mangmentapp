@@ -13,6 +13,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity(debug = true)
@@ -29,6 +32,8 @@ public class SecurityConfig {
     @Bean
             public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
             http
+                    .cors()
+                    .and()
                     .csrf().disable()
                     .exceptionHandling()
                     .authenticationEntryPoint(authEntryPoint)
@@ -53,6 +58,9 @@ public class SecurityConfig {
                     .antMatchers("/Commande/getall").hasAuthority("comptable")
                     .antMatchers("/Commande/addCommande").permitAll()
                     .antMatchers("/User/getall").hasAuthority("admin")
+                    .antMatchers("/Societe/details").hasAuthority("directure")
+
+
 
                     //.anyRequest().authenticated()
                     .and()
@@ -77,4 +85,16 @@ public class SecurityConfig {
     public  JWTAuthentifcationFilter jwtAuthenticationFilter() {
         return new JWTAuthentifcationFilter();
     }
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.addAllowedOrigin("http://localhost:3000"); // Allow requests from your frontend
+        configuration.addAllowedMethod("*"); // Allow all HTTP methods
+        configuration.addAllowedHeader("*"); // Allow all headers
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
 }
+

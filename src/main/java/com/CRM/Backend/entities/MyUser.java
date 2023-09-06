@@ -6,6 +6,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @Entity
@@ -31,6 +32,18 @@ public class MyUser {
         this.mail = mail;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof MyUser)) return false;
+        MyUser user = (MyUser) o;
+        return Objects.equals(getId(), user.getId()) && Objects.equals(getName(), user.getName()) && Objects.equals(getPassword(), user.getPassword()) && Objects.equals(getMail(), user.getMail()) && Objects.equals(getImage(), user.getImage()) && getRole() == user.getRole() && Objects.equals(getSocieteWork(), user.getSocieteWork());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getPassword(), getMail(), getImage(), getRole(), getSocieteWork());
+    }
 
     public MyUser() {
 
