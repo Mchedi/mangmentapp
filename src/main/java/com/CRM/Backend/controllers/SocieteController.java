@@ -1,6 +1,7 @@
 package com.CRM.Backend.controllers;
 
 import com.CRM.Backend.entities.Dto.SocieteDTO;
+import com.CRM.Backend.entities.Dto.SocieteDTO2;
 import com.CRM.Backend.entities.MyUser;
 import com.CRM.Backend.entities.Societe;
 import com.CRM.Backend.repositories.UserRepository;
@@ -18,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
@@ -116,6 +118,40 @@ public class SocieteController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND); // Handle the case where the creator has no associated societe
         }
     }
+        @PostMapping("/deleteComptable/{comptableEmail}")
+        public ResponseEntity<String> deleteComptable(@PathVariable String comptableEmail) {
+
+            // Get the logged user's email
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String directorEmail = authentication.getName();
+
+            try {
+                societeService.deleteComptable(directorEmail, comptableEmail);
+                return ResponseEntity.ok("Comptable has been sacked from the societe");
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error inviting comptable: " + e.getMessage());
+            }
+        }
+    @GetMapping("/getall2")
+    public List<SocieteDTO2> getAllSociete2s    () {
+        List<Societe> societes = societeService.RetrieveAllSociete();
+
+        List<SocieteDTO2> dtos = societes.stream()
+                .map(societe -> {
+                    SocieteDTO2 dto = new SocieteDTO2();
+                    dto.setName(societe.getName());
+                    dto.setChiffre_affaire(societe.getChiffre_affaire());
+                    dto.setMaricule_fiscale(societe.getMaricule_fiscale());
+                    dto.setAdress(societe.getAdress());
+                    dto.setCreatorName(societe.getCreator() != null ? societe.getCreator().getName() : null);
+                    return dto;
+                })
+                .collect(Collectors.toList());
+
+        return dtos;
+    }
+
+
 }
 
 

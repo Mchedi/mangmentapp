@@ -11,5 +11,5 @@ import java.util.Collection;
 import java.util.Iterator;
 
 public enum Role {
-                    user ,admin,directure,comptable,vendeur
+    user ,admin,directure,comptable,vendeur
 }

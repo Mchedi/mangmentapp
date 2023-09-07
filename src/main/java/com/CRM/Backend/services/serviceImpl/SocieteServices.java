@@ -1,6 +1,7 @@
 package com.CRM.Backend.services.serviceImpl;
 
 import com.CRM.Backend.entities.Dto.SocieteDTO;
+import com.CRM.Backend.entities.Dto.SocieteDTO2;
 import com.CRM.Backend.entities.MyUser;
 import com.CRM.Backend.entities.Role;
 import com.CRM.Backend.entities.Societe;
@@ -24,11 +25,14 @@ public class SocieteServices implements SocieteInterface {
     societeRepository sr;
     @Autowired
     SubRepository sur;
+    @Autowired
+    UserServices us;
 
     @Override
     public List<Societe> RetrieveAllSociete() {
         return sr.findAll();
     }
+
 
     @Override
     public void DeletSociete(Long id) {
@@ -63,6 +67,7 @@ public class SocieteServices implements SocieteInterface {
         return societe;
     }
 
+    @Override
 
     public String assignSocieteToSub(Long societeId, Long subId) {
         Societe societe = sr.findById(societeId).orElse(null);
@@ -76,6 +81,8 @@ public class SocieteServices implements SocieteInterface {
             return "Failed to assign Societe to Sub";
         }
     }
+    @Override
+
     public void inviteComptable(String directorEmail, String comptableEmail) {
         MyUser director = ur.findByMail(directorEmail).get();
         Societe directorSociete = director.getSocieteWork();
@@ -84,22 +91,50 @@ public class SocieteServices implements SocieteInterface {
         ur.save(comptable);
 
     }
+    @Override
+
     public SocieteDTO getSocieteDTOByCreator(Long id) {
         Societe societe = sr.findByCreatorId(id).get()  ;
-    List<MyUser> workers = ur.findAllBySocieteWorkId(societe.getId());
+        List<MyUser> workers = ur.findAllBySocieteWorkId(societe.getId());
         List<String> workerNames = workers.stream()
                 .map(MyUser::getName)
                 .collect(Collectors.toList());
+        List<String> workersMail = workers.stream()
+                .map(MyUser::getMail)
+                .collect(Collectors.toList());
+        List<Role> workerRoles = workers.stream()
+                .map(MyUser::getRole)
+                .collect(Collectors.toList());
 
-            return new SocieteDTO(
-                    societe.getName(),
-                    societe.getChiffre_affaire(),
-                    societe.getMaricule_fiscale(),
-                    societe.getAdress(),
-                    workerNames
-                    );
+        return new SocieteDTO(
+                societe.getName(),
+                societe.getChiffre_affaire(),
+                societe.getMaricule_fiscale(),
+                societe.getAdress(),
+                workerNames,
+                workersMail,
+                workerRoles
+        );
 
-        }
+    }
+    @Override
 
+    public void deleteComptable(String directorEmail, String comptableEmail) {
+        MyUser director = ur.findByMail(directorEmail).get();
+        Societe directorSociete = director.getSocieteWork();
+        MyUser comptable = ur.findByMailAndRole(comptableEmail, Role.comptable).get();
+        comptable.setSocieteWork(null);
+        ur.save(comptable);
+
+    }
+    public SocieteDTO2 mapSocieteToDTO(Societe societe) {
+        SocieteDTO2 dto =   new SocieteDTO2();
+        dto.setName(societe.getName());
+        dto.setChiffre_affaire(societe.getChiffre_affaire());
+        dto.setMaricule_fiscale(societe.getMaricule_fiscale());
+        dto.setAdress(societe.getAdress());
+        dto.setCreatorName(societe.getCreator() != null ? societe.getCreator().getName() : null);
+        return dto;
+    }
 
 }
