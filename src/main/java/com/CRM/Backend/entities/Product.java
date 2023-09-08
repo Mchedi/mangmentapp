@@ -21,4 +21,7 @@ import java.util.Set;
 
     @ManyToMany(cascade = CascadeType.ALL)
     private Set<Commande> Commandes;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    private societe societe;
 }
