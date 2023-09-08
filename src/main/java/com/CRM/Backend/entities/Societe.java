@@ -30,21 +30,11 @@
         @OneToMany(mappedBy = "societeWork", cascade = CascadeType.ALL)
         private Set<MyUser> workers;
 
-            @Override
-            public boolean equals(Object o) {
-                if (this == o) return true;
-                if (!(o instanceof Societe)) return false;
-                Societe societe = (Societe) o;
-                return getChiffre_affaire() == societe.getChiffre_affaire() && getMaricule_fiscale() == societe.getMaricule_fiscale() && Objects.equals(getId(), societe.getId()) && Objects.equals(getName(), societe.getName()) && Objects.equals(getAdress(), societe.getAdress()) && Objects.equals(getCreator(), societe.getCreator()) && Objects.equals(getWorkers(), societe.getWorkers()) && Objects.equals(getProducts(), societe.getProducts()) && Objects.equals(getSubs(), societe.getSubs());
-            }
 
-            @Override
-            public int hashCode() {
-                return Objects.hash(getId(), getName(), getChiffre_affaire(), getMaricule_fiscale(), getAdress(), getCreator(), getWorkers(), getProducts(), getSubs());
-            }
 
-            @ManyToMany(cascade = CascadeType.ALL)
-        private Set<Product> Products;
+
+
+
         @OneToOne
         Sub subs;
 

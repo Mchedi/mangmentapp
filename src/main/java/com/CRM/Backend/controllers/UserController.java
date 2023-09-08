@@ -31,6 +31,11 @@ public class UserController {
             return userServices.RetrieveAllUsers();
       }
 
+      //@GetMapping("/getalldirector")
+      //public List<MyUser>  getalldirector(){
+          //  return userServices.RetrieveAlldrector();
+    //  }
+
       @PostMapping("/adduser")
       @ResponseBody
       public MyUser addUser(@RequestBody MyUser myUser) {

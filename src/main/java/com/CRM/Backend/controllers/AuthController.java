@@ -57,7 +57,8 @@ import java.util.Optional;
         String token = jwtGenerator.generateToken(authentication);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String loggedInUserMail = SecurityContextHolder.getContext().getAuthentication().getName();
-        MyUser loggedInUser = userRepository.findByMail(loggedInUserMail)                .orElseThrow(() -> new UsernameNotFoundException("Logged-in user not found"));
+        MyUser loggedInUser = userRepository.findByMail(loggedInUserMail)
+                .orElseThrow(() -> new UsernameNotFoundException("Logged-in user not found"));
 
         Long userId = loggedInUser.getId();
         System.out.println("Authentication: " + auth);

@@ -18,6 +18,7 @@ public interface UserRepository extends JpaRepository<MyUser,Long> {
    // Optional<MyUser>  findMyUserByName(String name);
 
     List<MyUser> findAllBySocieteWorkId(Long societeWorkId);
+    //List<MyUser> findAllByRole_Directure();
 
 
 }

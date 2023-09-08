@@ -31,6 +31,7 @@ public class UserServices implements UserInterface {
     }
 
 
+
     @Override
     public ResponseEntity<String> DeleteUser(Long id) {
         try {
@@ -61,6 +62,7 @@ public class UserServices implements UserInterface {
 
 
     @Override
+
     public Societe addAndAssignSocToUser(Societe sc, Long userid) {
         return null;
     }

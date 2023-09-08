@@ -1,9 +1,16 @@
 package com.CRM.Backend.controllers;
 
+import com.CRM.Backend.entities.MyUser;
 import com.CRM.Backend.entities.Product;
 import com.CRM.Backend.entities.dto.ProductDto;
+import com.CRM.Backend.repositories.UserRepository;
 import com.CRM.Backend.services.serviceImpl.ProductServices;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,6 +21,8 @@ import java.util.List;
 
 public class ProductController {
       private final ProductServices productServices;
+      private final UserRepository userRepository;
+
 
       @GetMapping("/getall")
       public List<Product> getAllProducts() {
@@ -25,11 +34,28 @@ public class ProductController {
       }
 
 
-      @PostMapping("/addproduct")
-      @ResponseBody
-      public Product addproduct(@RequestBody ProductDto product) {
-            return productServices.AddProduct(product);
+      @PostMapping("/add")
+      public ResponseEntity<Product> addProduct(@RequestBody ProductDto productDto, Authentication authentication) {
+            if (authentication != null && authentication.isAuthenticated()) {
+                  // Get the currently logged-in user from the authentication object
+                  String loggedInUserMail = SecurityContextHolder.getContext().getAuthentication().getName();
+
+                  MyUser loggedInUser = userRepository.findByMail(loggedInUserMail)
+                          .orElseThrow(() -> new UsernameNotFoundException("Logged-in user not found"));
+
+                  // Call the productService to add the product and assign it to the logged-in user's societe
+                  Product addedProduct = productServices.addProductAndAssignUser(productDto, loggedInUser.getSocieteWork().getId() );
+
+                  if (addedProduct != null) {
+                        return ResponseEntity.ok(addedProduct);
+                  } else {
+                        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+                  }
+            } else {
+                  return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
       }
+
 
       @PutMapping("/updateproduct")
       @ResponseBody

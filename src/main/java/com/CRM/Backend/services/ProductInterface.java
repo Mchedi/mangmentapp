@@ -2,6 +2,7 @@ package com.CRM.Backend.services;
 
 
 import com.CRM.Backend.entities.Product;
+import com.CRM.Backend.entities.Societe;
 import com.CRM.Backend.entities.dto.ProductDto;
 
 import java.util.List;
@@ -17,4 +18,5 @@ public interface ProductInterface {
     public Product UpdateProduct(Product product, Long id);
 
 
+    Product addProductAndAssignUser(ProductDto productDto, Long userId);
 }
