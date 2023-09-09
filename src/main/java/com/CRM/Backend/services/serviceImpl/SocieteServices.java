@@ -127,6 +127,20 @@ public class SocieteServices implements SocieteInterface {
         ur.save(comptable);
 
     }
+
+        @Override
+        public boolean verifsociete(String directorEmail) {
+            MyUser director = ur.findByMail(directorEmail).get();
+            Societe sc =  (sr.findSocieteByCreator_Id(director.getId()) )  ;
+
+            if (sc == null) {
+                return false;
+            }else
+                return true ;
+
+
+        }
+
     public SocieteDTO2 mapSocieteToDTO(Societe societe) {
         SocieteDTO2 dto =   new SocieteDTO2();
         dto.setName(societe.getName());

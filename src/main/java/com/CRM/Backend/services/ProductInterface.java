@@ -15,6 +15,8 @@ public interface ProductInterface {
     Product AddProduct(ProductDto product);
 
     public Product UpdateProduct(Product product, Long id);
+    Product addProductAndAssignUser(ProductDto productDto, Long userId);
+    public List<Product> Retrievemyprodcuts(Long userId);
 
 
 }

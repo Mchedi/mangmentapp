@@ -49,7 +49,7 @@ public class SecurityConfig {
                     .antMatchers("/sublimit/addsublimit").hasAuthority("admin")
                     .antMatchers("/{subId}/assign-sublim/{sublimId}").hasAuthority("admin")
                     .antMatchers("/{{societeId}}/assign-sub/{{subId}}").hasAuthority("directure")
-                    .antMatchers("/Product/getall").permitAll()
+                    .antMatchers("/Product/getall").hasAuthority("directure")
                     .antMatchers("/Product/getall/{id}").permitAll()
                     .antMatchers("/Product/addproduct").hasAuthority("directure")
                     .antMatchers("/Product/updateproduct").hasAuthority("directure")
@@ -59,10 +59,13 @@ public class SecurityConfig {
                     .antMatchers("/Commande/addCommande").permitAll()
                     .antMatchers("/User/getall").hasAuthority("admin")
                     .antMatchers("/Societe/details").hasAuthority("directure")
+                    .antMatchers("/Societe/verifsoc").permitAll()
 
 
 
-                      .anyRequest().authenticated()
+
+
+                    .anyRequest().authenticated()
                     .and()
                     .httpBasic();
             http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

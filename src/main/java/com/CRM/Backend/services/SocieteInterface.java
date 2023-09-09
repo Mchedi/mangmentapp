@@ -25,4 +25,7 @@ public interface SocieteInterface {
     SocieteDTO getSocieteDTOByCreator(Long id);
 
     void deleteComptable(String directorEmail, String comptableEmail);
+
+
+    boolean verifsociete(String directorEmail);
 }

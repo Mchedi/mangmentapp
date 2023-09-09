@@ -18,6 +18,8 @@ import java.util.Set;
 
     private String picture;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Societe societe;
 
     @ManyToMany(cascade = CascadeType.ALL)
     private Set<Commande> Commandes;
