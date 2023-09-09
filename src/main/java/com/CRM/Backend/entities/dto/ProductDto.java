@@ -1,5 +1,6 @@
 package com.CRM.Backend.entities.dto;
 
+import com.CRM.Backend.entities.Category;
 import com.CRM.Backend.entities.Commande;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +16,7 @@ public class        ProductDto {
 
     private String name;
     private double price;
-    private String category;
+    private Category category;
     private String picture;
 
 }

@@ -30,10 +30,10 @@ public class CommandeController {
             return commandeServices.AddCommande(commande);
       }
 
-      @PutMapping("/updateproduct")
+      @PutMapping("/updateproduct/{id}")
       @ResponseBody
-      public Commande updatecommande(@RequestBody Commande commande,Integer id) {
-            return commandeServices.UpdateCommande(commande, id);
+      public Commande updatecommande(@RequestBody Commande commande,@PathVariable Integer id) {
+            return commande;
       }
       @DeleteMapping("/{id}")
       public void Deletecommande(@PathVariable Integer id){

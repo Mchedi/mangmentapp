@@ -14,7 +14,9 @@ import java.util.Set;
     private long id;
     private String name;
     private double price;
-    private String category;
+
+    @Enumerated(EnumType.STRING)
+    private Category category;
 
     private String picture;
 
