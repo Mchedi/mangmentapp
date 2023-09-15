@@ -86,6 +86,7 @@ public class SubServices implements SubInterface {
                 d.setNbsc( d.getNbsc() +1);
             // Link the Sub entity to the Societe
             societe.setSubs(sub);
+            societe.setChiffre_affaire( societe.getChiffre_affaire()- sub.getPrice());
             sor.save(societe);
 
 
