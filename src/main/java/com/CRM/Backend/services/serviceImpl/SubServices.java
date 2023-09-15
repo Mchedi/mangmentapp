@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.*;
 
 @Service
 public class SubServices implements SubInterface {
@@ -62,28 +62,35 @@ public class SubServices implements SubInterface {
 
 
     @Override
-    public String addSubadign(Sub sub, Long userId) {
-        Optional<MyUser> user = ur.findById(userId);
-        Societe societe = sor.findSocieteByCreator_Id(userId);
+        public String addSubadign(Sub sub, Long userId) {
+            Optional<MyUser> user = ur.findById(userId);
+            Societe societe = sor.findSocieteByCreator_Id(userId);
 
-        // Calculate the price based on Durationinmonths
-        int durationInMonths = sub.getDurationinmonths(); // Assuming the field name is "durationinmonths"
-        int price = durationInMonths * 200;
+            // Calculate the price based on Durationinmonths
+            int durationInMonths = sub.getDurationinmonths(); // Assuming the field name is "durationinmonths"
+            int price = durationInMonths * 200;
 
-        // Set the calculated price and purchase_date
-        sub.setPrice(price);
-        sub.setPurchase_date(new Date());
+            // Set the calculated price and purchase_date
+            sub.setPrice(price);
+            sub.setPurchase_date(new Date());
+            LocalDate purchaseLocalDate = sub.getPurchase_date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate expirationLocalDate = purchaseLocalDate.plusMonths(durationInMonths);
+            Date expirationDate = Date.from(expirationLocalDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
-        // Save the Sub entity
-        sub = sur.save(sub);
-        Dashboard d =  dr.findById(1L).get();
-            d.setCA(sub.getPrice());
-        // Link the Sub entity to the Societe
-        societe.setSubs(sub);
-        sor.save(societe);
+            sub.setExpiration_sub_date(expirationDate); // Set the calculated expiration date
 
-        return "sub created";
-    }
+            // Save the Sub entity
+            sub = sur.save(sub);
+            Dashboard d =  dr.findById(1).get();
+                d.setCA( d.getCA()+ sub.getPrice());
+                d.setNbsc( d.getNbsc() +1);
+            // Link the Sub entity to the Societe
+            societe.setSubs(sub);
+            sor.save(societe);
+
+
+            return "sub created";
+        }
 
 
 

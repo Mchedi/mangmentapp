@@ -30,4 +30,6 @@ public interface SocieteInterface {
 
 
     boolean verifsociete(String directorEmail);
+
+    boolean verifsub(String directorEmail);
 }

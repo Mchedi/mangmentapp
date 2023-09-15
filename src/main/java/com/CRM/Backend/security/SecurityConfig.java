@@ -60,7 +60,8 @@ public class SecurityConfig {
                     .antMatchers("/User/getall").hasAuthority("admin")
                     .antMatchers("/Societe/details").hasAuthority("directure")
                     .antMatchers("/Societe/verifsoc").permitAll()
-                    .antMatchers("/Societe/details").hasAuthority(" sub/add")
+                    .antMatchers("/Societe/details").hasAuthority("directure")
+                    .antMatchers("/sub/add").hasAuthority("directure")
 
                     .anyRequest().authenticated()
                     .and()

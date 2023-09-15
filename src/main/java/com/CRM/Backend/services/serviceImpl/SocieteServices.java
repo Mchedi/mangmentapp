@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -124,7 +125,8 @@ public class SocieteServices implements SocieteInterface {
                 societe.getAdress(),
                 workerNames,
                 workersMail,
-                workerRoles
+                workerRoles,
+                societe.getSubs().getExpiration_sub_date()
         );
 
     }
@@ -149,8 +151,17 @@ public class SocieteServices implements SocieteInterface {
             }else
                 return true ;
 
-
         }
+    @Override
+    public boolean verifsub(String directorEmail) {
+        MyUser director = ur.findByMail(directorEmail).get();
+        Societe sc =  (sr.findSocieteByCreator_Id(director.getId()) )  ;
+
+        if (sc.getSubs().getExpiration_sub_date().before(new Date())) {
+            return false;
+        }else
+            return true ;
+    }
 
     public SocieteDTO2 mapSocieteToDTO(Societe societe) {
         SocieteDTO2 dto =   new SocieteDTO2();

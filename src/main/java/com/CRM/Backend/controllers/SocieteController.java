@@ -54,6 +54,15 @@ public class SocieteController {
 
         return societeService.verifsociete(loggedInUser.getMail());
     }
+    @GetMapping("/verifsub")
+    public boolean verifsub(){
+        String loggedInUserMail = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        MyUser loggedInUser = userRepository.findByMail(loggedInUserMail)
+                .orElseThrow(() -> new UsernameNotFoundException("Logged-in user not found"));
+
+        return societeService.verifsub(loggedInUser.getMail());
+    }
 // ...
 
     @CrossOrigin(origins = "http://localhost:3000/")
