@@ -1,8 +1,10 @@
 package com.CRM.Backend.controllers;
 
+import com.CRM.Backend.entities.Dto.InviteComptableRequest;
 import com.CRM.Backend.entities.Dto.SocieteDTO;
 import com.CRM.Backend.entities.Dto.SocieteDTO2;
 import com.CRM.Backend.entities.MyUser;
+import com.CRM.Backend.entities.Role;
 import com.CRM.Backend.entities.Societe;
 import com.CRM.Backend.repositories.UserRepository;
 import com.CRM.Backend.security.CustomUserDetailsService;
@@ -97,21 +99,23 @@ public class SocieteController {
         String result = societeService.assignSocieteToSub(societeId, subId);
         return ResponseEntity.ok(result);
     }
-    @PostMapping("/inviteComptable/{comptableEmail}")
-    public ResponseEntity<String> inviteComptable(@PathVariable String comptableEmail) {
-
-        // Get the logged user's email
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String directorEmail = authentication.getName();
-
+    @PostMapping("/inviteComptable")
+    public ResponseEntity<String> inviteComptable(
+            @RequestBody InviteComptableRequest request
+    ) {
         try {
-            societeService.inviteComptable(directorEmail, comptableEmail);
+            // Get the logged user's email
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String directorEmail = authentication.getName();
+
+            // Call the service function with the necessary parameters
+            societeService.inviteComptable(directorEmail, request.getWorkerEmail() , request.getName(), request.getRole());
+
             return ResponseEntity.ok("Comptable invited and associated with the director's societe.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error inviting comptable: " + e.getMessage());
         }
     }
-
     @GetMapping("/details")
     public ResponseEntity<SocieteDTO> getSocieteDetails(Authentication authentication) {
         // Get the currently logged-in user from the authentication object

@@ -9,8 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +27,11 @@ public class UserServices implements UserInterface {
     UserRepository ur;
     @Autowired
     societeRepository sr;
+    @Autowired
+    JavaMailSender javaMailSender;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
 
 
     @Override
@@ -57,6 +68,21 @@ public class UserServices implements UserInterface {
     public MyUser UpdateUser(MyUser myUser, Long id) {
         return null;
     }
+
+    @Override
+    public void updateMyInfo(String loggedInUserMail, MyUser updatedUser) {
+        MyUser loggedInUser = ur.findByMail(loggedInUserMail)
+                .orElseThrow(() -> new UsernameNotFoundException("Logged-in user not found"));
+
+        loggedInUser.setMail(updatedUser.getMail());
+        loggedInUser.setName(updatedUser.getName());
+
+        loggedInUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
+
+        // Save the updated user
+        ur.save(loggedInUser);
+    }
+
 
 
 
@@ -108,5 +134,18 @@ public class UserServices implements UserInterface {
         return userDTOs;
     }
 
+    @Override
+    public void sendEmail(String to, String subject, String text) throws MessagingException {
+            MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
 
-}
+            helper.setTo(to);
+            helper.setSubject(subject);
+            helper.setText(text, true); // true indicates text is HTML
+
+            javaMailSender.send(mimeMessage);
+        }
+
+    }
+
+

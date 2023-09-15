@@ -2,8 +2,10 @@ package com.CRM.Backend.services;
 
 import com.CRM.Backend.entities.Dto.SocieteDTO;
 import com.CRM.Backend.entities.Dto.SocieteDTO2;
+import com.CRM.Backend.entities.Role;
 import com.CRM.Backend.entities.Societe;
 
+import javax.mail.MessagingException;
 import java.util.List;
 
 public interface SocieteInterface {
@@ -20,7 +22,7 @@ public interface SocieteInterface {
 
     String assignSocieteToSub(Long societeId, Long subId);
 
-    void inviteComptable(String directorEmail, String comptableEmail);
+    void inviteComptable(String directorEmail, String WorkerEmail, String name, Role role) throws MessagingException;
 
     SocieteDTO getSocieteDTOByCreator(Long id);
 

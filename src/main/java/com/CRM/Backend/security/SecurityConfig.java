@@ -43,9 +43,9 @@ public class SecurityConfig {
                     .and()
                     .authorizeRequests()
                     .antMatchers("/api/auth/**").permitAll()
-                       .antMatchers("/Societe/getall").hasAuthority("admin")
+
+                    .antMatchers("/Societe/getall").hasAuthority("admin")
                     .antMatchers("/Societe/addAndAssignUser").hasAuthority("directure")
-                    .antMatchers("/sub/addsub").hasAuthority("admin")
                     .antMatchers("/sublimit/addsublimit").hasAuthority("admin")
                     .antMatchers("/{subId}/assign-sublim/{sublimId}").hasAuthority("admin")
                     .antMatchers("/{{societeId}}/assign-sub/{{subId}}").hasAuthority("directure")
@@ -60,10 +60,7 @@ public class SecurityConfig {
                     .antMatchers("/User/getall").hasAuthority("admin")
                     .antMatchers("/Societe/details").hasAuthority("directure")
                     .antMatchers("/Societe/verifsoc").permitAll()
-
-
-
-
+                    .antMatchers("/Societe/details").hasAuthority(" sub/add")
 
                     .anyRequest().authenticated()
                     .and()

@@ -20,6 +20,9 @@
                 private  int maricule_fiscale  ;
                 private String adress;
 
+            @OneToOne
+            Sub subs;
+
         @OneToOne
         @JsonIgnore
 
@@ -43,9 +46,6 @@
                 return Objects.hash(getId(), getName(), getChiffre_affaire(), getMaricule_fiscale(), getAdress(), getCreator(), getWorkers(), getSubs());
             }
 
-
-        @OneToOne
-        Sub subs;
 
 
     }

@@ -10,7 +10,6 @@ import java.util.Objects;
 
 @Data
 @Entity
-
 public class MyUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

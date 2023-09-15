@@ -1,6 +1,7 @@
 package com.CRM.Backend.controllers;
 
 import com.CRM.Backend.entities.Dto.UserDTO;
+import com.CRM.Backend.entities.EmailRequest;
 import com.CRM.Backend.entities.MyUser;
 import com.CRM.Backend.entities.Societe;
 import com.CRM.Backend.repositories.UserRepository;
@@ -13,8 +14,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+
 
 @RestController
 @AllArgsConstructor
@@ -79,6 +83,30 @@ public class UserController {
                   return userServices.getMyUsersInfo(societeId);
             } else {
                   return Collections.emptyList(); // Return an empty list if no Societe is associated with the user
+            }
+      }
+
+      @PostMapping("/send-email")
+      public void sendEmail(@RequestBody EmailRequest emailRequest) {
+            try {
+                  userServices.sendEmail(emailRequest.getTo(), emailRequest.getSubject(), emailRequest.getText());
+            } catch (MessagingException e) {
+                  // Handle exception
+            }
+      }
+      @PutMapping("updateMyInfo")
+      public ResponseEntity<String> updateMyInfo(@RequestBody MyUser updatedUser) {
+            try {
+                  String loggedInUserMail = SecurityContextHolder.getContext().getAuthentication().getName();
+
+                  MyUser loggedInUser = userRepository.findByMail(loggedInUserMail)
+                          .orElseThrow(() -> new UsernameNotFoundException("Logged-in user not found"));
+
+                  userServices.updateMyInfo(loggedInUserMail, updatedUser);
+
+                  return ResponseEntity.ok("User information updated successfully.");
+            } catch (Exception e) {
+                  return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating user information: " + e.getMessage());
             }
       }
 

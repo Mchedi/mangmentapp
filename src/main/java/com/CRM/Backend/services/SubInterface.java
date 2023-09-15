@@ -14,6 +14,11 @@ public interface SubInterface {
 
     public String addSub(Sub sub);
 
+    String addSub(Sub sub, Societe societe, Long userId);
+
+
+    String addSubadign(Sub sub, Long userId);
+
     public Sub UpdateSub(Sub sub, Long id);
     void assignSublimToSub(Long subId, Long sublimId);
     public void checkAndLogExgetSubpiredSubscriptionsForAllSocietes() ;

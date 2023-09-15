@@ -1,23 +1,16 @@
 package com.CRM.Backend.services.serviceImpl;
 
-import com.CRM.Backend.entities.Societe;
-import com.CRM.Backend.entities.Sub;
-import com.CRM.Backend.entities.Sublim;
-import com.CRM.Backend.repositories.SubRepository;
-import com.CRM.Backend.repositories.UserRepository;
-import com.CRM.Backend.repositories.limitRepository;
-import com.CRM.Backend.repositories.societeRepository;
+import com.CRM.Backend.entities.*;
+import com.CRM.Backend.repositories.*;
 import com.CRM.Backend.services.SubInterface;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.io.Console;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Logger;
+import java.util.Optional;
 
 @Service
 public class SubServices implements SubInterface {
@@ -33,7 +26,8 @@ public class SubServices implements SubInterface {
     @Autowired
     SubServices subscriptionService;
 
-
+    @Autowired
+    dashboarRepository dr;
 
     @Override
     public List<Sub> RetrieveAllSubs() {
@@ -56,16 +50,44 @@ public class SubServices implements SubInterface {
         return sur.findById(id).get();
     }
 
-
     @Override
     public String addSub(Sub sub) {
-        Sub addedSub = sur.save(sub);
+        return null;
+    }
 
-        if (addedSub != null) {
-            return "Sub added successfully";
-        } else {
-            return "You're not allowed to add a sub";
-        }}
+    @Override
+    public String addSub(Sub sub, Societe societe, Long userId) {
+        return null;
+    }
+
+
+    @Override
+    public String addSubadign(Sub sub, Long userId) {
+        Optional<MyUser> user = ur.findById(userId);
+        Societe societe = sor.findSocieteByCreator_Id(userId);
+
+        // Calculate the price based on Durationinmonths
+        int durationInMonths = sub.getDurationinmonths(); // Assuming the field name is "durationinmonths"
+        int price = durationInMonths * 200;
+
+        // Set the calculated price and purchase_date
+        sub.setPrice(price);
+        sub.setPurchase_date(new Date());
+
+        // Save the Sub entity
+        sub = sur.save(sub);
+        Dashboard d =  dr.findById(1L).get();
+            d.setCA(sub.getPrice());
+        // Link the Sub entity to the Societe
+        societe.setSubs(sub);
+        sor.save(societe);
+
+        return "sub created";
+    }
+
+
+
+
 
     @Override
     public Sub UpdateSub(Sub sub, Long id) {
@@ -88,7 +110,16 @@ public class SubServices implements SubInterface {
             List<Societe> societes = new ArrayList<>();
             societes.forEach(societe -> {
             Sub sub = societe.getSubs() ; // Assuming a getter method for the subscription in Societe class
-            if (sub.getEnd_Date().before(new Date())) {
+                int durationInMonths = sub.getDurationinmonths();
+                Date purchaseDate = sub.getPurchase_date();
+                long currentTimeMillis = System.currentTimeMillis();
+                long purchaseTimeMillis = purchaseDate.getTime();
+                long timeDifference = currentTimeMillis - purchaseTimeMillis;
+                long differenceInDays = timeDifference / (1000 * 60 * 60 * 24);
+
+                if (differenceInDays > (durationInMonths * 30)) {
+
+
                 logExpiredSubscription(sub.getId(), societe.getName());
             }
         });}

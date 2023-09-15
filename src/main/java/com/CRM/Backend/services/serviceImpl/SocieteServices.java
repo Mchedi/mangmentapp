@@ -1,18 +1,18 @@
 package com.CRM.Backend.services.serviceImpl;
 
+import com.CRM.Backend.entities.*;
 import com.CRM.Backend.entities.Dto.SocieteDTO;
 import com.CRM.Backend.entities.Dto.SocieteDTO2;
-import com.CRM.Backend.entities.MyUser;
-import com.CRM.Backend.entities.Role;
-import com.CRM.Backend.entities.Societe;
-import com.CRM.Backend.entities.Sub;
 import com.CRM.Backend.repositories.SubRepository;
 import com.CRM.Backend.repositories.UserRepository;
+import com.CRM.Backend.repositories.dashboarRepository;
 import com.CRM.Backend.repositories.societeRepository;
 import com.CRM.Backend.services.SocieteInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,6 +27,10 @@ public class SocieteServices implements SocieteInterface {
     SubRepository sur;
     @Autowired
     UserServices us;
+    @Autowired
+    dashboarRepository dr;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public List<Societe> RetrieveAllSociete() {
@@ -83,13 +87,20 @@ public class SocieteServices implements SocieteInterface {
     }
     @Override
 
-    public void inviteComptable(String directorEmail, String comptableEmail) {
+    public void inviteComptable(String directorEmail, String WorkerEmail, String name, Role role) throws MessagingException {
         MyUser director = ur.findByMail(directorEmail).get();
+        MyUser woerker = new MyUser();
         Societe directorSociete = director.getSocieteWork();
-        MyUser comptable = ur.findByMailAndRole(comptableEmail, Role.comptable).get();
-        comptable.setSocieteWork(directorSociete);
-        ur.save(comptable);
-
+     //   MyUser comptable = ur.findByMailAndRole(comptableEmail, Role.comptable).get();
+        woerker.setSocieteWork(directorSociete);
+        woerker.setName(name);
+        woerker.setRole(role);
+        woerker.setMail(WorkerEmail);
+        String plainPassword = "12345";
+        String hashedPassword = passwordEncoder.encode(plainPassword);
+        woerker.setPassword(hashedPassword);
+        ur.save(woerker);
+        us.sendEmail( woerker.getMail(),  "password" ,  "welcome to my societe,  here is your password 12345, you can change it later, plz visit localhost/3000/login");
     }
     @Override
 

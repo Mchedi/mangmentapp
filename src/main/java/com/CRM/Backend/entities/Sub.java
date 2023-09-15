@@ -15,16 +15,15 @@ public class Sub {
 
     private Long id;
     @Temporal(TemporalType.DATE)
+    private Date purchase_date ;
 
-    private Date Start_Datte;
-    @Temporal(TemporalType.DATE)
-
-    private Date End_Date;
+    private int durationinmonths;
     private  int price;
+    @OneToOne(mappedBy = "subs")
+    private Societe sc;
     @ManyToMany
     private List<Sublim> sublims ;
 
-    @OneToOne(mappedBy = "subs")
-    private Societe sc;
+
 
 }
