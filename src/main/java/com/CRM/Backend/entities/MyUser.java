@@ -1,6 +1,7 @@
 package com.CRM.Backend.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -10,22 +11,21 @@ import java.util.Objects;
 
 @Data
 @Entity
-public class MyUser {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public class MyUser {
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-    private Long id;
-    private String Name;
-    private String password;
-    private String mail;
-    private String image;
+        private Long id;
+        private String Name;
+        private String password;
+        private String mail;
+        private String image;
 
-    @Enumerated(EnumType.STRING)
-    private Role role    ;
-
-    @ManyToOne
-        //@JsonIgnore
-        private Societe societeWork;
+        @Enumerated(EnumType.STRING)
+        private Role role    ;
+        @ManyToOne
+            //@JsonIgnore
+            private Societe societeWork;
     public MyUser(String password, String mail) {
         this.password = password;
         this.mail = mail;

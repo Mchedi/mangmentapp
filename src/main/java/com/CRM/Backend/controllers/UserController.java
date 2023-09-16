@@ -1,9 +1,11 @@
 package com.CRM.Backend.controllers;
 
+import com.CRM.Backend.entities.Dashboard;
 import com.CRM.Backend.entities.Dto.UserDTO;
 import com.CRM.Backend.entities.EmailRequest;
 import com.CRM.Backend.entities.MyUser;
 import com.CRM.Backend.entities.Societe;
+import com.CRM.Backend.repositories.DashboarRepository;
 import com.CRM.Backend.repositories.UserRepository;
 import com.CRM.Backend.services.serviceImpl.UserServices;
 import lombok.AllArgsConstructor;
@@ -27,14 +29,24 @@ import java.util.Optional;
 public class UserController {
       private final UserServices userServices;
       private final UserRepository userRepository;
+      private final DashboarRepository dashboarRepository;
+
 
       @CrossOrigin(origins = "http://localhost:3000/")
 
       @GetMapping("/getall")
-      public List<MyUser>  getAllAppEvent(){
+      public List<MyUser>  getAllUsers(){
             return userServices.RetrieveAllUsers();
       }
-
+      @GetMapping("/alldtos")
+      public ResponseEntity<List<UserDTO>> getAllUserDTOs() {
+            List<UserDTO> userDTOs = userServices.getAllUserDTOs();
+            return ResponseEntity.ok(userDTOs);
+      }
+      @GetMapping("/dashborad")
+      public Optional<Dashboard> getadshbord(){
+            return dashboarRepository.findById(1);
+      }
       @PostMapping("/adduser")
       @ResponseBody
       public MyUser addUser(@RequestBody MyUser myUser) {

@@ -1,5 +1,6 @@
 package com.CRM.Backend.controllers;
 
+import com.CRM.Backend.entities.Dto.SubDTO;
 import com.CRM.Backend.entities.MyUser;
 import com.CRM.Backend.entities.Societe;
 import com.CRM.Backend.entities.Sub;
@@ -27,7 +28,11 @@ public class SubController {
       public List<Sub> getAllSubs() {
             return subServices.RetrieveAllSubs();
       }
-
+      @GetMapping("/alldtos")
+      public ResponseEntity<List<SubDTO>> getAllSubDTOs() {
+            List<SubDTO> subDTOs = subServices.getAllSubDTOs();
+            return ResponseEntity.ok(subDTOs);
+      }
       @PostMapping("/add")
       public ResponseEntity<String> addSubscription(@RequestBody Sub sub) {
             try {

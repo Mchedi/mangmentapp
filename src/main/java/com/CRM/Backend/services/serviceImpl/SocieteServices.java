@@ -5,7 +5,7 @@ import com.CRM.Backend.entities.Dto.SocieteDTO;
 import com.CRM.Backend.entities.Dto.SocieteDTO2;
 import com.CRM.Backend.repositories.SubRepository;
 import com.CRM.Backend.repositories.UserRepository;
-import com.CRM.Backend.repositories.dashboarRepository;
+import com.CRM.Backend.repositories.DashboarRepository;
 import com.CRM.Backend.repositories.societeRepository;
 import com.CRM.Backend.services.SocieteInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class SocieteServices implements SocieteInterface {
     @Autowired
     UserServices us;
     @Autowired
-    dashboarRepository dr;
+    DashboarRepository dr;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 

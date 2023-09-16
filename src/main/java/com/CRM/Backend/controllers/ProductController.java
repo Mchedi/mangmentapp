@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -73,16 +74,25 @@ public class ProductController {
 
       }
       @GetMapping("/society-products")
-      public List<Product> getAllProductsCreatedByLoggedInUser(Authentication authentication) {
-            // Retrieve the currently logged-in user's information from the authentication object
-            String loggedInUserMail = SecurityContextHolder.getContext().getAuthentication().getName();
+      public ResponseEntity<List<Product>> getAllProductsCreatedByLoggedInUser(Authentication authentication) {
+            try {
+                  // Retrieve the currently logged-in user's information from the authentication object
+                  String loggedInUserMail = SecurityContextHolder.getContext().getAuthentication().getName();
 
-            MyUser loggedInUser = userRepository.findByMail(loggedInUserMail)
-                    .orElseThrow(() -> new UsernameNotFoundException("Logged-in user not found"));
+                  MyUser loggedInUser = userRepository.findByMail(loggedInUserMail)
+                          .orElseThrow(() -> new UsernameNotFoundException("Logged-in user not found"));
 
-            // Call the ProductService to retrieve products associated with the user's created society
-            return productServices.Retrievemyprodcuts(loggedInUser.getId());
+                  // Call the ProductService to retrieve products associated with the user's created society
+                  List<Product> products = productServices.Retrievemyprodcuts(loggedInUser.getId());
+
+                  return ResponseEntity.ok(products);
+            } catch (UsernameNotFoundException ex) {
+                  return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.emptyList());
+            } catch (Exception e) {
+                  return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.emptyList());
+            }
       }
+
 }
 
 

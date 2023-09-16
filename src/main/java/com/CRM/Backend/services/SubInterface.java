@@ -1,5 +1,6 @@
 package com.CRM.Backend.services;
 
+import com.CRM.Backend.entities.Dto.SubDTO;
 import com.CRM.Backend.entities.Societe;
 import com.CRM.Backend.entities.Sub;
 
@@ -9,6 +10,9 @@ public interface SubInterface {
 
     public List<Sub> RetrieveAllSubs();
     public void DeleteSub(Long id);
+
+    List<SubDTO> getAllSubDTOs();
+
     public Sub RetrieveSubById(Long id);
     //public Sub AddSub(Sub sub);
 

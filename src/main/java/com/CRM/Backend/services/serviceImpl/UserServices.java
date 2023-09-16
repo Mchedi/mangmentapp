@@ -51,6 +51,23 @@ public class UserServices implements UserInterface {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Unable to delete user due to data integrity violation.");
         }
     }
+    public List<UserDTO> getAllUserDTOs() {
+        List<MyUser> users = ur.findAll();
+        List<UserDTO> userDTOs = new ArrayList<>();
+
+        for (MyUser user : users) {
+            UserDTO userDTO = new UserDTO();
+            userDTO.setName(user.getName());
+            userDTO.setMail(user.getMail());
+            userDTO.setRole(user.getRole());
+
+            // Assuming you have a method to retrieve societeName from the user's societe
+
+            userDTOs.add(userDTO);
+        }
+
+        return userDTOs;
+    }
 
     @Override
     public MyUser RetrieveUserById(Long id) {
@@ -124,9 +141,8 @@ public class UserServices implements UserInterface {
             userDTO.setRole(user.getRole());
 
             // Check if the user has an associated Societe and set its name
-            if (user.getSocieteWork() != null) {
-                userDTO.setSocieteName(user.getSocieteWork().getName());
-            }
+            //if (user.getSocieteWork() != null) {
+
 
             userDTOs.add(userDTO);
         }

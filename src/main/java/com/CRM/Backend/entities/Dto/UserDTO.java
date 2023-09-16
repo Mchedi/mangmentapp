@@ -8,7 +8,6 @@ public class UserDTO {
     private String name;
     private String mail;
     private Role role;
-    private String societeName;
 
     // Constructors, getters, and setters for the properties
 }

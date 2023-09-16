@@ -1,6 +1,7 @@
 package com.CRM.Backend.services.serviceImpl;
 
 import com.CRM.Backend.entities.*;
+import com.CRM.Backend.entities.Dto.SubDTO;
 import com.CRM.Backend.repositories.*;
 import com.CRM.Backend.services.SubInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +28,18 @@ public class SubServices implements SubInterface {
     SubServices subscriptionService;
 
     @Autowired
-    dashboarRepository dr;
+    DashboarRepository dr;
 
     @Override
     public List<Sub> RetrieveAllSubs() {
 
-        return sur.findAll();
-
+        try {
+            return sur.findAll();
+        } catch (Exception e) {
+            // Log the error or handle it as needed
+            e.printStackTrace(); // You can replace this with your preferred logging mechanism
+            throw new RuntimeException("Failed to retrieve subscriptions", e);
+        }
     }
 
     @Override
@@ -43,6 +49,25 @@ public class SubServices implements SubInterface {
         ur.deleteById(id);
 
 
+    }
+    @Override
+    public List<SubDTO> getAllSubDTOs() {
+        List<Sub> subs = sur.findAll();
+        List<SubDTO> subDTOs = new ArrayList<>();
+
+
+        for (Sub sub : subs) {
+            SubDTO subDTO = new SubDTO();
+            subDTO.setId(sub.getId());
+            subDTO.setPurchaseDate(sub.getPurchase_date());
+            subDTO.setExpirationDate(sub.getExpiration_sub_date());
+            subDTO.setDurationInMonths(sub.getDurationinmonths());
+            subDTO.setPrice(sub.getPrice());
+
+            subDTOs.add(subDTO);
+
+        }
+        return subDTOs;
     }
 
     @Override
@@ -84,6 +109,7 @@ public class SubServices implements SubInterface {
             Dashboard d =  dr.findById(1).get();
                 d.setCA( d.getCA()+ sub.getPrice());
                 d.setNbsc( d.getNbsc() +1);
+                societe.setChiffre_affaire(societe.getChiffre_affaire()-sub.getPrice());
             // Link the Sub entity to the Societe
             societe.setSubs(sub);
             societe.setChiffre_affaire( societe.getChiffre_affaire()- sub.getPrice());
