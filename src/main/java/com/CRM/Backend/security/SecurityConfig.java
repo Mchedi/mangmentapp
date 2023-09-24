@@ -57,6 +57,7 @@ public class SecurityConfig {
                     .antMatchers("/Commande/updateproduct/**").permitAll()
                     .antMatchers("/User/getall").hasAuthority("admin")
                     .antMatchers("/Societe/details").hasAuthority("directure")
+                    .antMatchers("/Panier/**").permitAll()
 
 
 

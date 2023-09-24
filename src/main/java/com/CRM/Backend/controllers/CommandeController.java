@@ -1,12 +1,15 @@
 package com.CRM.Backend.controllers;
 
 import com.CRM.Backend.entities.Commande;
+import com.CRM.Backend.entities.Product;
 import com.CRM.Backend.entities.dto.CommandeDto;
 import com.CRM.Backend.services.serviceImpl.CommandeServices;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @AllArgsConstructor
@@ -39,6 +42,8 @@ public class CommandeController {
       public void Deletecommande(@PathVariable Integer id){
              commandeServices.DeleteCommande(id);
       }
+
+
 }
 
 

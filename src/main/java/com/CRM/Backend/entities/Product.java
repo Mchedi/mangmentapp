@@ -1,9 +1,12 @@
 package com.CRM.Backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -21,10 +24,9 @@ import java.util.Set;
     private String picture;
 
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Societe societe;
+
     @ManyToMany(cascade = CascadeType.ALL)
-    private Set<Commande> Commandes;
+    private List<Panier> paniers ;
 }
 
 

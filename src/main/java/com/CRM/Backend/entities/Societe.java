@@ -7,7 +7,7 @@
     import java.util.Objects;
     import java.util.Set;
 
-        @Data
+    @Data
     @Entity
 
     public class Societe {
@@ -29,10 +29,6 @@
         @JsonIgnore
         @OneToMany(mappedBy = "societeWork", cascade = CascadeType.ALL)
         private Set<MyUser> workers;
-
-
-
-
 
 
         @OneToOne

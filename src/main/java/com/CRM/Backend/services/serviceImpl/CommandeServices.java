@@ -2,15 +2,19 @@ package com.CRM.Backend.services.serviceImpl;
 
 import com.CRM.Backend.entities.Caise;
 import com.CRM.Backend.entities.Commande;
+import com.CRM.Backend.entities.Product;
 import com.CRM.Backend.entities.dto.CommandeDto;
 import com.CRM.Backend.repositories.CommandeRepository;
+import com.CRM.Backend.repositories.ProductRepository;
 import com.CRM.Backend.repositories.societeRepository;
 import com.CRM.Backend.services.CommandeInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class CommandeServices implements CommandeInterface {
@@ -19,11 +23,17 @@ public class CommandeServices implements CommandeInterface {
     CommandeRepository cr;
     @Autowired
     societeRepository sr;
+    @Autowired
+    ProductRepository productRepository;
 
 
     @Override
     public List<Commande> RetrieveAllCommandes() {
-        return cr.findAll();
+        List<Commande> commandes= cr.findAll();
+
+
+        return commandes;
+
     }
 
     @Override
@@ -63,6 +73,8 @@ public class CommandeServices implements CommandeInterface {
         {return cr.save(commande);}
         else {System.out.println("erreur update");return  null ;}
     }
+
+
 }
 
 

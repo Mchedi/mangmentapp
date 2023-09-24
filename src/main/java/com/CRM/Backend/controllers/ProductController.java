@@ -28,6 +28,7 @@ public class ProductController {
       public List<Product> getAllProducts() {
             return productServices.RetrieveAllProducts();
       }
+
       @GetMapping("/getall/{id}")
       public Product getAllProductsbyId(@PathVariable Long id) {
             return productServices.RetrieveProductById(id);

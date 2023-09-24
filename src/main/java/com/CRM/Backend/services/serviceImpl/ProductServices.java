@@ -27,6 +27,8 @@ public class ProductServices implements ProductInterface {
 
     @Override
     public List<Product> RetrieveAllProducts() {
+
+
         return pr.findAll();
     }
 
@@ -65,9 +67,12 @@ public class ProductServices implements ProductInterface {
 
     @Override
     public Product UpdateProduct(Product product, Long id) {
-        if (pr.findById(id).isPresent())
+        try { if (pr.findById(id).isPresent())
         {return pr.save(product);}
-        else {System.out.println("erreur update");return  null ;}
+        } catch (Exception e) {
+            throw new RuntimeException("erreur update"+ e);
+        }
+        return null;
     }
     @Override
 
@@ -84,7 +89,7 @@ public class ProductServices implements ProductInterface {
         newProduct.setPrice(productDto.getPrice());
         newProduct.setCategory(productDto.getCategory());
         newProduct.setPicture(productDto.getPicture());
-        newProduct.setSociete(userSociete);
+        //newProduct.setSociete(userSociete);
 
         // Save the product
         return pr.save(newProduct);

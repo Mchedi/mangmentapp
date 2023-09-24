@@ -17,6 +17,28 @@ import java.util.Set;
     private Etat etat;
     private int montant;
 
-    @ManyToMany(mappedBy="Commandes", cascade = CascadeType.ALL)
-    private Set<Product> Products;
+    @OneToOne
+    private Commande Commande;
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + id;
+        // Excluez la référence à Etat ici
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
+        Commande other = (Commande) obj;
+        if (id != other.id)
+            return false;
+        // Excluez la référence à Etat ici
+        return true;
+    }
 }
