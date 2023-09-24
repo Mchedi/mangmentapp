@@ -2,6 +2,7 @@ package com.CRM.Backend.controllers;
 
 import com.CRM.Backend.entities.Dashboard;
 import com.CRM.Backend.entities.Dto.UserDTO;
+import com.CRM.Backend.entities.Dto.updateUserDto;
 import com.CRM.Backend.entities.EmailRequest;
 import com.CRM.Backend.entities.MyUser;
 import com.CRM.Backend.entities.Societe;
@@ -63,9 +64,13 @@ public class UserController {
             }
       }
 
-      @GetMapping("/get/{id}")
+      @GetMapping("/getbyid")
       @ResponseBody
-      public MyUser getUserById(@PathVariable("id") Long id){
+      public updateUserDto getUserById(Long id){
+            String loggedInUserMail = SecurityContextHolder.getContext().getAuthentication().getName();
+            MyUser loggedInUser = userRepository.findByMail(loggedInUserMail)
+                    .orElseThrow(() -> new UsernameNotFoundException("Logged-in user not found"));
+            id = loggedInUser.getId();
             return userServices.RetrieveUserById(id);
       }
 

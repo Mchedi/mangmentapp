@@ -3,7 +3,7 @@ package com.CRM.Backend.services.serviceImpl;
 import com.CRM.Backend.entities.*;
 import com.CRM.Backend.entities.Dto.SocieteDTO;
 import com.CRM.Backend.entities.Dto.SocieteDTO2;
-import com.CRM.Backend.repositories.SubRepository;
+import com.CRM.Backend.repositories.SubOptionRepository;
 import com.CRM.Backend.repositories.UserRepository;
 import com.CRM.Backend.repositories.DashboarRepository;
 import com.CRM.Backend.repositories.societeRepository;
@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,7 +26,9 @@ public class SocieteServices implements SocieteInterface {
     @Autowired
     societeRepository sr;
     @Autowired
-    SubRepository sur;
+    SubOptionRepository subOptionRepository;
+
+
     @Autowired
     UserServices us;
     @Autowired
@@ -74,17 +77,26 @@ public class SocieteServices implements SocieteInterface {
 
     @Override
 
-    public String assignSocieteToSub(Long societeId, Long subId) {
-        Societe societe = sr.findById(societeId).orElse(null);
-        Sub sub = sur.findById(subId).orElse(null);
+    public String purchasesub(Long userid, Long Subid) {
+        Optional<MyUser> user = ur.findById(userid);
+        SubOption sub = subOptionRepository.findById(Subid).get();
+        Societe societe = sr.findSocieteByCreator_Id(userid);       // Sub sub = sur.findById(subId).orElse(null);
 
-        if (societe != null && sub != null) {
             societe.setSubs(sub);
+            societe.setChiffre_affaire( societe.getChiffre_affaire() - sub.getPrice());
+            societe.setSub_purchase_date(new Date());
+
+        Date expirationDate = new Date();
+                     expirationDate.setMonth(expirationDate.getMonth() + 1);
+            societe.setSub_expiration_date(expirationDate);
+        Dashboard d =  dr.findById(1).get();
+        d.setCA( d.getCA()+ sub.getPrice());
+        d.setNbsc( d.getNbsc() +1);
+        societe.setChiffre_affaire(societe.getChiffre_affaire()-sub.getPrice());
             sr.save(societe);
-            return "Societe assigned to Sub successfully";
-        } else {
-            return "Failed to assign Societe to Sub";
-        }
+            return "Sub purchased ";
+
+
     }
     @Override
 
@@ -92,7 +104,7 @@ public class SocieteServices implements SocieteInterface {
         MyUser director = ur.findByMail(directorEmail).get();
         MyUser woerker = new MyUser();
         Societe directorSociete = director.getSocieteWork();
-     //   MyUser comptable = ur.findByMailAndRole(comptableEmail, Role.comptable).get();
+     //   MyUser comptable = ur .findByMailAndRole(comptableEmail, Role.comptable).get();
         woerker.setSocieteWork(directorSociete);
         woerker.setName(name);
         woerker.setRole(role);
@@ -107,7 +119,7 @@ public class SocieteServices implements SocieteInterface {
 
     public SocieteDTO getSocieteDTOByCreator(Long id) {
         Societe societe = sr.findByCreatorId(id).get()  ;
-        List<MyUser> workers = ur.findAllBySocieteWorkId(societe.getId());
+        /*List<MyUser> workers = ur.findAllBySocieteWorkId(societe.getId());
         List<String> workerNames = workers.stream()
                 .map(MyUser::getName)
                 .collect(Collectors.toList());
@@ -116,17 +128,15 @@ public class SocieteServices implements SocieteInterface {
                 .collect(Collectors.toList());
         List<Role> workerRoles = workers.stream()
                 .map(MyUser::getRole)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList());*/
 
         return new SocieteDTO(
                 societe.getName(),
                 societe.getChiffre_affaire(),
                 societe.getMaricule_fiscale(),
                 societe.getAdress(),
-                workerNames,
-                workersMail,
-                workerRoles,
-                societe.getSubs().getExpiration_sub_date()
+
+                societe.getSub_expiration_date ()
         );
 
     }
@@ -157,7 +167,7 @@ public class SocieteServices implements SocieteInterface {
         MyUser director = ur.findByMail(directorEmail).get();
         Societe sc =  (sr.findSocieteByCreator_Id(director.getId()) )  ;
 
-        if (sc.getSubs().getExpiration_sub_date().before(new Date())) {
+        if (sc.getSub_expiration_date ().before(new Date()) || sc.getSubs().equals(null) )  {
             return false;
         }else
             return true ;

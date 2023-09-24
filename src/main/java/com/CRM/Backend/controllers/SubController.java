@@ -3,7 +3,6 @@ package com.CRM.Backend.controllers;
 import com.CRM.Backend.entities.Dto.SubDTO;
 import com.CRM.Backend.entities.MyUser;
 import com.CRM.Backend.entities.Societe;
-import com.CRM.Backend.entities.Sub;
 import com.CRM.Backend.repositories.UserRepository;
 import com.CRM.Backend.services.serviceImpl.SubServices;
 import lombok.AllArgsConstructor;
@@ -24,7 +23,7 @@ public class SubController {
       private final UserRepository userRepository;
 
 
-      @GetMapping("/getall")
+      /*@GetMapping("/getall")
       public List<Sub> getAllSubs() {
             return subServices.RetrieveAllSubs();
       }
@@ -70,5 +69,5 @@ public class SubController {
       public void assignSublimToSub(@PathVariable Long subId, @PathVariable Long sublimId) {
             subServices.assignSublimToSub(subId, sublimId);
       }
-
+*/
 }

@@ -20,38 +20,19 @@ public class SubServices implements SubInterface {
     UserRepository ur;
     @Autowired
     societeRepository sor;
+
     @Autowired
-    SubRepository sur;
-    @Autowired
-    limitRepository limitRepository;
+    SubOptionRepository SubOptionRepository;
     @Autowired
     SubServices subscriptionService;
 
     @Autowired
     DashboarRepository dr;
 
-    @Override
-    public List<Sub> RetrieveAllSubs() {
-
-        try {
-            return sur.findAll();
-        } catch (Exception e) {
-            // Log the error or handle it as needed
-            e.printStackTrace(); // You can replace this with your preferred logging mechanism
-            throw new RuntimeException("Failed to retrieve subscriptions", e);
-        }
-    }
-
-    @Override
-    public void DeleteSub(Long id) {
 
 
-        ur.deleteById(id);
 
-
-    }
-    @Override
-    public List<SubDTO> getAllSubDTOs() {
+    /*public List<SubDTO> getAllSubDTOs() {
         List<Sub> subs = sur.findAll();
         List<SubDTO> subDTOs = new ArrayList<>();
 
@@ -68,25 +49,14 @@ public class SubServices implements SubInterface {
 
         }
         return subDTOs;
-    }
-
-    @Override
-    public Sub RetrieveSubById(Long id) {
-        return sur.findById(id).get();
-    }
-
-    @Override
-    public String addSub(Sub sub) {
-        return null;
-    }
-
-    @Override
-    public String addSub(Sub sub, Societe societe, Long userId) {
-        return null;
-    }
+    }*/
 
 
-    @Override
+
+
+
+
+  /*  @Override
         public String addSubadign(Sub sub, Long userId) {
             Optional<MyUser> user = ur.findById(userId);
             Societe societe = sor.findSocieteByCreator_Id(userId);
@@ -118,30 +88,14 @@ public class SubServices implements SubInterface {
 
             return "sub created";
         }
+*/
 
 
 
-
-
-    @Override
-    public Sub UpdateSub(Sub sub, Long id) {
-        return null;
-    }
-
-    @Override
-    public void assignSublimToSub(Long subId, Long sublimId) {
-        Sub sub = sur.findById(subId).orElse(null);
-        Sublim sublim = limitRepository.findById(sublimId).orElse(null);
-
-            sub.getSublims().add(sublim); // Assign the Sublim to Sub
-            sur.save(sub);
-    }
-
-
-        @Override
+         /* @Override
         @Scheduled(fixedRate = 1000)
         public void checkAndLogExgetSubpiredSubscriptionsForAllSocietes() {
-            List<Societe> societes = new ArrayList<>();
+          List<Societe> societes = new ArrayList<>();
             societes.forEach(societe -> {
             Sub sub = societe.getSubs() ; // Assuming a getter method for the subscription in Societe class
                 int durationInMonths = sub.getDurationinmonths();
@@ -161,9 +115,9 @@ public class SubServices implements SubInterface {
         public void logExpiredSubscription(Long subscriptionId, String societeName) {
             org.slf4j.LoggerFactory.getLogger(SubServices.class)
                     .info("Subscription with ID {} for Societe '{}' is expired.", subscriptionId, societeName);        }
-    }
+    }*/
 
-
+        }
 
 
 

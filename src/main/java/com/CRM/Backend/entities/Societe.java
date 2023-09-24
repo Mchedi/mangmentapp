@@ -4,6 +4,7 @@
     import lombok.Data;
 
     import javax.persistence.*;
+    import java.util.Date;
     import java.util.Objects;
     import java.util.Set;
 
@@ -19,9 +20,12 @@
                 private int chiffre_affaire;
                 private  int maricule_fiscale  ;
                 private String adress;
-
+            @Temporal(TemporalType.DATE)
+            private Date sub_purchase_date ;
+            @Temporal(TemporalType.DATE)
+            private Date sub_expiration_date ;
             @OneToOne
-            Sub subs;
+            SubOption subs;
 
         @OneToOne
         @JsonIgnore

@@ -18,5 +18,5 @@ import java.util.Set;
     private int montant;
 
     @ManyToMany(mappedBy="Commandes", cascade = CascadeType.ALL)
-    private Set<Product> Products;
+        private Set<Product> Products;
 }

@@ -3,11 +3,14 @@ package com.CRM.Backend.entities.Dto;
 import com.CRM.Backend.entities.Role;
 import lombok.Data;
 
+ import lombok.Data;
+
 @Data
-public class UserDTO {
+public class updateUserDto {
     private String name;
     private String mail;
-    private Role role;
+    private String Password ;
+
 
 
     // Constructors, getters, and setters for the properties

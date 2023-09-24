@@ -20,7 +20,9 @@ public interface SocieteInterface {
     Societe addAndAssignUserToSociete(Societe societe, Long userId);
 
 
-    String assignSocieteToSub(Long societeId, Long subId);
+    //String assignSocieteToSub(Long societeId, Long subId);
+
+    String purchasesub(Long userid, Long Sub);
 
     void inviteComptable(String directorEmail, String WorkerEmail, String name, Role role) throws MessagingException;
 

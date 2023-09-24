@@ -64,7 +64,9 @@ public class SecurityConfig {
                     .antMatchers("/sub/add").hasAuthority("directure")
                     .antMatchers("/Product/society-products ").hasAuthority("directure")
                     .antMatchers("/User/dashborad").hasAuthority("admin")
-                    .antMatchers("/sub/getall").hasAuthority("admin")
+                    .antMatchers("/subOption/getall").hasAuthority("directure")
+                   // .antMatchers("/subOption/getall").hasAuthority("admin")
+
 
 
 

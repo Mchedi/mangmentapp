@@ -2,31 +2,31 @@ package com.CRM.Backend.services;
 
 import com.CRM.Backend.entities.Dto.SubDTO;
 import com.CRM.Backend.entities.Societe;
-import com.CRM.Backend.entities.Sub;
+import com.CRM.Backend.entities.SubOption;
 
 import java.util.List;
 
 public interface SubInterface {
 
-    public List<Sub> RetrieveAllSubs();
-    public void DeleteSub(Long id);
+    //public List<Sub> RetrieveAllSubs();
+    //public void DeleteSub(Long id);
 
-    List<SubDTO> getAllSubDTOs();
+    //List<SubDTO> getAllSubDTOs();
 
-    public Sub RetrieveSubById(Long id);
+    //public SubOption RetrieveSubById(Long id);
     //public Sub AddSub(Sub sub);
 
-    public String addSub(Sub sub);
+    //public String addSub(SubOption sub);
 
-    String addSub(Sub sub, Societe societe, Long userId);
+    //String addSub(SubOption sub, Societe societe, Long userId);
 
 
-    String addSubadign(Sub sub, Long userId);
+    //String addSubadign(SubOption sub, Long userId);
 
-    public Sub UpdateSub(Sub sub, Long id);
-    void assignSublimToSub(Long subId, Long sublimId);
-    public void checkAndLogExgetSubpiredSubscriptionsForAllSocietes() ;
-     void logExpiredSubscription(Long subscriptionId, String societeName);
+    //public SubOption UpdateSub(SubOption sub, Long id);
+    //void assignSublimToSub(Long subId, Long sublimId);
+    //public void checkAndLogExgetSubpiredSubscriptionsForAllSocietes() ;
+     //void logExpiredSubscription(Long subscriptionId, String societeName);
 
 
 }

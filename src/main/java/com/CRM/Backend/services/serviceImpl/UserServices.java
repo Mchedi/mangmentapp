@@ -1,6 +1,7 @@
 package com.CRM.Backend.services.serviceImpl;
 
 import com.CRM.Backend.entities.Dto.UserDTO;
+import com.CRM.Backend.entities.Dto.updateUserDto;
 import com.CRM.Backend.entities.MyUser;
 import com.CRM.Backend.entities.Societe;
 import com.CRM.Backend.repositories.*;
@@ -61,7 +62,6 @@ public class UserServices implements UserInterface {
             userDTO.setMail(user.getMail());
             userDTO.setRole(user.getRole());
 
-            // Assuming you have a method to retrieve societeName from the user's societe
 
             userDTOs.add(userDTO);
         }
@@ -70,8 +70,20 @@ public class UserServices implements UserInterface {
     }
 
     @Override
-    public MyUser RetrieveUserById(Long id) {
-        return ur.findById(id).get();
+    public updateUserDto RetrieveUserById(Long id) {
+        MyUser user = ur.findById(id).orElse(null); // Use orElse(null) to handle cases where the user is not found
+        if (user != null) {
+            // Perform mapping from MyUser to updateUserDto here
+            updateUserDto dto = new updateUserDto();
+            dto.setMail (user.getMail()  );
+            dto.setName(user.getName());
+            dto.setPassword(user.getPassword()      );
+
+            // Map other properties as needed
+            return dto;
+        } else {
+            return null; // Or handle the case where the user is not found
+        }
     }
 
 

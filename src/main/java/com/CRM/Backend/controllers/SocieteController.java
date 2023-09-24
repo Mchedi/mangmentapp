@@ -10,6 +10,7 @@ import com.CRM.Backend.entities.Societe;
 import com.CRM.Backend.repositories.UserRepository;
 import com.CRM.Backend.security.CustomUserDetailsService;
 import com.CRM.Backend.services.serviceImpl.SocieteServices;
+import com.CRM.Backend.services.serviceImpl.SubOptionService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +34,7 @@ import java.util.stream.Collectors;
 public class SocieteController {
       private final SocieteServices societeService;
     private final UserRepository userRepository;
+    private final SubOptionService subOptionService;
 
     private final CustomUserDetailsService customUserDetailsService;
 
@@ -101,15 +103,20 @@ public class SocieteController {
             return societeService.RetrieveSocieteById(id);
       }
 
-    @PostMapping("/{societeId}/purchase_sub/{subId}")
-    public ResponseEntity<String> assignSubToSociete(
-            @PathVariable Long societeId,
-            @PathVariable Long subId) {
+        @PostMapping(   "/Purchase_sub/{subId}")
+        public ResponseEntity<String> assignSubToSociete(
 
-        String result = societeService.assignSocieteToSub(societeId, subId);
-        return ResponseEntity.ok(result);
-    }
-    @PostMapping("/inviteComptable")
+                @PathVariable Long subId) {
+
+            String loggedInUserMail = SecurityContextHolder.getContext().getAuthentication().getName();
+
+            MyUser loggedInUser = userRepository.findByMail(loggedInUserMail)
+                    .orElseThrow(() -> new UsernameNotFoundException("Logged-in user not found"));
+           // Long societeId=loggedInUser.getSocieteWork().getId();
+            String result = societeService.purchasesub( loggedInUser.getId(), subId);
+            return ResponseEntity.ok(result);
+        }
+                @PostMapping("/inviteComptable")
     public ResponseEntity<String> inviteComptable(
             @RequestBody InviteComptableRequest request
     ) {
@@ -141,6 +148,11 @@ public class SocieteController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND); // Handle the case where the creator has no associated societe
         }
+    }
+    @GetMapping("/alldtos")
+    public ResponseEntity<List<SubDTO>> getAllSubDTOs() {
+        List<SubDTO> subDTOs = subOptionService.getAllPurchasedSubs()   ;
+        return ResponseEntity.ok(subDTOs);
     }
         @PostMapping("/deleteComptable/{comptableEmail}")
         public ResponseEntity<String> deleteComptable(@PathVariable String comptableEmail) {
