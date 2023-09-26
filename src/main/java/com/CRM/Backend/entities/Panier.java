@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -18,7 +19,7 @@ import java.util.Set;
     private int montant;
 
     @ManyToMany(mappedBy="paniers", cascade = CascadeType.ALL)
-    private List<Product> Products;
+    private List<Product> Products= new ArrayList<>();
 
 
 }

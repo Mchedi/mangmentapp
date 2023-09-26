@@ -44,7 +44,7 @@ public class PanierController {
       }
 
       @PutMapping("/{panierId}/ajouter-produits/{produitId}")
-      public ResponseEntity<Panier> ajouterProduitsAuPanier(@PathVariable int panierId, @PathVariable int produitId) {
+      public ResponseEntity<Panier> ajouterProduitsAuPanier(@PathVariable int panierId, @PathVariable int produitId) throws Exception {
             Panier panier = panierServices.ajouterProduitAuPanier(panierId, produitId);
             return new ResponseEntity<>(panier, HttpStatus.OK);
       }

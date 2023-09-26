@@ -7,13 +7,17 @@ import com.CRM.Backend.repositories.PanierRepository;
 import com.CRM.Backend.repositories.ProductRepository;
 import com.CRM.Backend.repositories.societeRepository;
 import com.CRM.Backend.services.PanierInterface;
+import lombok.extern.log4j.Log4j;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.*;
+import java.util.logging.Logger;
 
 @Service
+
 public class PanierServices implements PanierInterface {
 
     @Autowired
@@ -23,6 +27,9 @@ public class PanierServices implements PanierInterface {
 
     @Autowired
     ProductRepository productRepository;
+
+    Logger logger = (Logger) LoggerFactory.getLogger(PanierServices.class);
+
 
 
     @Override
@@ -71,28 +78,40 @@ public class PanierServices implements PanierInterface {
     }
 
     @Transactional
-    public Panier ajouterProduitAuPanier(int panierId, int produitId) {
-        Panier panier = par.findById(panierId)
-                .orElseGet(() -> {
-                    Panier nouveauPanier = new Panier();
-                    nouveauPanier.setProducts(new ArrayList<>());
-                    return nouveauPanier;
-                });
-        Product produit = productRepository.findById((long) produitId).orElse(null);
-        if (produit != null) {
-            List<Product> listP = new ArrayList<>(panier.getProducts());
-            listP.add(produit);
-            panier.setProducts(listP);
-            panier.setQte(panier.getProducts().size());
-            int total = 0;
-            for (Product product : panier.getProducts()) {
-                total += (int) product.getPrice();
-            }
-            panier.setMontant(total);
-            return par.save(panier);
-        } else {
-            return null;
+    public Panier ajouterProduitAuPanier(int panierId, int produitId) throws Exception {
+        try {
+            Panier panierFromDb = par.findById(panierId).orElse(null);
+            Product produitFromDb = productRepository.findById((long) produitId).orElse(null);
 
+            if (Objects.nonNull(produitFromDb) && Objects.nonNull(panierFromDb)) {
+                List<Product> listP = new ArrayList<>();
+
+                if (panierFromDb.getProducts() != null && !panierFromDb.getProducts().isEmpty()) {
+                    listP = panierFromDb.getProducts();
+                }
+
+                System.out.println(" size listp before add" +listP.size());
+                listP.add(produitFromDb);
+                panierFromDb.setProducts(listP);
+                System.out.println(" size listp after add" +panierFromDb.getProducts().size());
+                panierFromDb = par.save(panierFromDb);
+                System.out.println(" size listp after save in db " +panierFromDb.getProducts().size());
+
+                panierFromDb.setQte(panierFromDb.getProducts().size());
+
+                int total = 0;
+                for (Product product : panierFromDb.getProducts()) {
+                    total += (int) product.getPrice();
+                }
+                panierFromDb.setMontant(total);
+                return par.save(panierFromDb);
+
+            } else {
+                return null;
+            }
+
+        }catch (Exception e){
+            throw new Exception(e);
         }
     }
 }
