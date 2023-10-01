@@ -19,9 +19,14 @@ import java.util.Set;
     private String picture;
 
 
+<<<<<<< Updated upstream
     @ManyToMany(cascade = CascadeType.ALL)
     private Set<Commande> Commandes;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private societe societe;
+=======
+
+
+>>>>>>> Stashed changes
 }

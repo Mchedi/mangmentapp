@@ -14,6 +14,12 @@ import java.util.Date;
     private int Qte;
     private int montant;
 
+<<<<<<< Updated upstream
     @OneToOne
     private Commande Commandes;
+=======
+
+
+
+>>>>>>> Stashed changes
 }

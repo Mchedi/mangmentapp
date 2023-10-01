@@ -1,6 +1,7 @@
 package com.CRM.Backend.controllers;
 
 import com.CRM.Backend.entities.Panier;
+import com.CRM.Backend.entities.Product;
 import com.CRM.Backend.entities.dto.PanierDto;
 import com.CRM.Backend.services.serviceImpl.PanierServices;
 import lombok.AllArgsConstructor;
@@ -39,6 +40,11 @@ public class PanierController {
       public void DeletePanier(@PathVariable Integer id){
              panierServices.DeletePanier(id);
       }
+
+      @GetMapping("/ListeProduits/{id}")
+      public List<Product> ListeProduits(@PathVariable int id) {return panierServices.ListeProduits(id);
+      }
+
 }
 
 
